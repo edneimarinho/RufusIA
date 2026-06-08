@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu ebook chegou | Atitude e Progresso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #0d0d0d;
+      --accent: #D4AF37;
+      --text:   #F0EDE8;
+      --muted:  #7a7a7a;
+      --border: rgba(212,175,55,.12);
+      --radius: 6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      overflow-x: hidden;
+    }
+
+    #canvas-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .check-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(212,175,55,.1);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+    }
+
+    .check-wrap svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: .7;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    h1 span { color: var(--accent); }
+
+    p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .btn-download {
+      display: inline-block;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-family: 'Inter', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--radius);
+      padding: 18px 40px;
+      transition: opacity .2s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-download::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      pointer-events: none;
+    }
+
+    .btn-download:hover {
+      opacity: .9;
+      box-shadow: 0 0 28px rgba(212,175,55,.35);
+    }
+
+    .note {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: 20px;
+      margin-bottom: 0;
+      opacity: .6;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin: 40px auto;
+      opacity: .4;
+    }
+
+    .back {
+      font-size: .78rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .back:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<div class="card">
+  <div class="check-wrap">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+
+  <p class="label">Cadastro confirmado</p>
+
+  <h1>Seu ebook está <span>pronto</span> para baixar</h1>
+
+  <p>Clique no botão abaixo para baixar o PDF agora. O acesso é imediato.</p>
+
+  <!--
+    SUBSTITUA o href abaixo pelo link público do Google Drive do seu PDF.
+    Para pegar o link: Google Drive → clique direito no arquivo → Compartilhar
+    → "Qualquer pessoa com o link" → Copiar link.
+  -->
+  <a href="https://drive.google.com/file/d/1yc4cdKkVja7D3Oa0dx1CDqyURp2aeH8b/view?usp=share_link" target="_blank" class="btn-download">
+    Baixar o ebook em PDF
+  </a>
+
+  <p class="note">O arquivo abre no navegador ou baixa direto, dependendo do seu dispositivo.</p>
+
+  <div class="divider"></div>
+
+  <a href="https://www.atitudeeprogresso.com.br" class="back">Voltar para atitudeeprogresso.com.br</a>
+</div>
+
+<script>
+  (function () {
+    const canvas = document.getElementById('canvas-bg');
+    const ctx    = canvas.getContext('2d');
+    const GOLD   = 'rgba(212,175,55,';
+    let W, H, particles;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function rand(a, b) { return Math.random() * (b - a) + a; }
+
+    function make() {
+      return { x: rand(0,W), y: rand(0,H), vx: rand(-.25,.25), vy: rand(-.25,.25),
+               r: rand(.8,1.8), a: rand(.15,.4) };
+    }
+
+    function init() { resize(); particles = Array.from({length:40}, make); }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -5) p.x = W+5;
+        if (p.x > W+5) p.x = -5;
+        if (p.y < -5) p.y = H+5;
+        if (p.y > H+5) p.y = -5;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = GOLD + p.a + ')';
+        ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('resize', resize);
+    init(); tick();
+  })();
+</script>
+
+</body>
+</html>

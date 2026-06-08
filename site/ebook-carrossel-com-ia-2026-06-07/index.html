@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrossel com IA: Ebook Gratuito | Atitude e Progresso</title>
+  <meta name="description" content="Aprenda a criar carrossel profissional usando Claude Code do zero, sem agência, sem curso caro. Método real, passo a passo. Baixe gratuitamente.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #0d0d0d;
+      --bg-alt:       #080f09;
+      --accent:       #D4AF37;
+      --accent-glow:  rgba(212,175,55,.18);
+      --accent-dim:   rgba(212,175,55,.08);
+      --green:        #064420;
+      --text:         #F0EDE8;
+      --muted:        #7a7a7a;
+      --border:       rgba(212,175,55,.12);
+      --glass:        rgba(255,255,255,.025);
+      --radius:       6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Canvas background ── */
+    #canvas-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    section { padding: 96px 0; }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: clamp(2rem, 5.5vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2.5px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: .92rem;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    p { color: var(--muted); line-height: 1.75; }
+
+    .accent { color: var(--accent); }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 14px 0 44px;
+    }
+
+    .divider::before {
+      content: '';
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      background: rgba(13,13,13,.7);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-text {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .badge {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 5px 14px;
+      border-radius: 2px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0;
+      position: relative;
+    }
+
+    /* grid overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,175,55,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+    }
+
+    /* bottom fade */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(transparent, var(--bg));
+      pointer-events: none;
+    }
+
+    /* hero top row: text + cover */
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: center;
+      margin-bottom: 52px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* hero form row: centered below */
+    .hero-form-row {
+      max-width: 580px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .block {
+      display: block;
+    }
+
+    .hero-lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    /* ── Ebook cover ── */
+    .cover-wrap {
+      position: relative;
+    }
+
+    .cover-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: calc(var(--radius) + 1px);
+      background: linear-gradient(135deg, var(--accent), transparent 60%, rgba(6,68,32,.6));
+      z-index: 0;
+    }
+
+    .cover {
+      position: relative;
+      z-index: 1;
+      background: #0a160b;
+      border-radius: var(--radius);
+      aspect-ratio: 3/4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      overflow: hidden;
+    }
+
+    /* scanlines on cover */
+    .cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,.08) 2px,
+        rgba(0,0,0,.08) 4px
+      );
+      pointer-events: none;
+    }
+
+    .cover-tag {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: .8;
+    }
+
+    .cover-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -.5px;
+      text-align: center;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .cover-title span {
+      color: var(--accent);
+    }
+
+    .cover-line {
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+      margin: 0 auto 24px;
+    }
+
+    .cover-author {
+      font-size: .72rem;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: .5px;
+    }
+
+    /* when using a real image */
+    .cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow:
+        0 0 0 1px var(--accent-dim),
+        0 32px 64px rgba(0,0,0,.4);
+    }
+
+    .form-card > p {
+      font-size: .88rem;
+      margin-bottom: 22px;
+      color: var(--muted);
+    }
+
+    .form-group { margin-bottom: 14px; }
+
+    .form-group label {
+      display: block;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 4px;
+      padding: 13px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: .95rem;
+      color: var(--text);
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .form-group input::placeholder { color: rgba(255,255,255,.2); }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: #0d0d0d;
+      font-family: 'Inter', sans-serif;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 4px;
+      padding: 16px 24px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: opacity .2s, box-shadow .2s;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      pointer-events: none;
+    }
+
+    .btn:hover {
+      opacity: .92;
+      box-shadow: 0 0 24px rgba(212,175,55,.35);
+    }
+
+    .form-note {
+      font-size: .7rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+      opacity: .7;
+    }
+
+    /* ── Section labels ── */
+    .section-label {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: .7;
+      margin-bottom: 10px;
+    }
+
+    /* ── Benefits ── */
+    .benefits {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .benefit {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 24px 22px;
+      background: var(--bg);
+      transition: background .2s;
+    }
+
+    .benefit:hover {
+      background: var(--accent-dim);
+    }
+
+    .benefit-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-dim);
+    }
+
+    .benefit-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .benefit-num {
+      font-size: .6rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      opacity: .6;
+      margin-bottom: 4px;
+    }
+
+    .benefit h3 {
+      font-size: .88rem;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    .benefit p { font-size: .8rem; line-height: 1.55; }
+
+    /* ── Audience ── */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .audience-card {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+    }
+
+    .audience-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .audience-card:hover {
+      border-color: rgba(212,175,55,.28);
+      box-shadow: 0 8px 32px rgba(0,0,0,.3);
+    }
+
+    .audience-card svg {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 14px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2.5;
+    }
+
+    .audience-card p {
+      font-size: .88rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── Author ── */
+    .author {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .author-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .author-photo-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .author-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: calc(var(--radius) + 2px);
+      background: linear-gradient(135deg, var(--accent), transparent 60%);
+      z-index: 0;
+    }
+
+    .author-photo {
+      position: relative;
+      z-index: 1;
+      width: 150px;
+      height: 150px;
+      border-radius: var(--radius);
+      background: #0a160b;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      overflow: hidden;
+    }
+
+    .author-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-name {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .author-role {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      opacity: .8;
+    }
+
+    .author-bio p { margin-bottom: 12px; }
+
+    /* ── CTA Final ── */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(212,175,55,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-inner h2 { margin-bottom: 0; }
+
+    .cta-form-wrap {
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .cta-form-wrap .form-card {
+      border-color: rgba(212,175,55,.22);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p   { font-size: .76rem; }
+    footer a   { font-size: .76rem; color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── Fade-in animation ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      section { padding: 72px 0; }
+
+      .hero-top {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .cover-wrap {
+        max-width: 240px;
+        margin: 0 auto;
+      }
+
+      .benefits-grid { grid-template-columns: 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+
+      .author-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      header .container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Particle canvas -->
+<canvas id="canvas-bg"></canvas>
+
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <a href="https://www.atitudeeprogresso.com.br" target="_blank" rel="noopener" class="logo-text" style="text-decoration:none;">Atitude e Progresso</a>
+      <span class="badge">Ebook gratuito</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+
+      <!-- Linha 1: título + capa lado a lado -->
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">Ebook gratuito</p>
+          <h1>
+            <span class="block">Carrossel</span>
+            <span class="block">com <span class="accent">IA:</span></span>
+            <span class="block">do zero ao post</span>
+          </h1>
+          <p class="hero-lead">
+            Sem depender de agência ou guru. Guia prático pra criar carrossel profissional usando Claude Code, sem curso caro, sem promessa de resultado automático.
+          </p>
+        </div>
+
+        <div class="cover-wrap">
+          <img src="capa.png" alt="Capa do ebook Carrossel com IA" loading="lazy"
+               style="width:100%;border-radius:6px;display:block;position:relative;z-index:1;">
+        </div>
+      </div>
+
+      <!-- Linha 2: formulário centralizado abaixo -->
+      <div class="hero-form-row">
+        <div class="form-card">
+          <p style="text-align:center; font-size:.95rem; color:var(--text); margin-bottom:6px; font-weight:600;">
+            Gratuito. Acesso imediato.
+          </p>
+          <p style="text-align:center; margin-bottom:24px;">
+            Preencha o formulário e o ebook chega direto no seu email em segundos, sem esperar, sem etapa extra.
+          </p>
+          <form id="form-ebook" action="https://formspree.io/f/xojzdqnk" method="POST">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="nome-hero">Nome</label>
+                <input type="text" id="nome-hero" name="nome" placeholder="Seu nome" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label for="email-hero">Email</label>
+                <input type="email" id="email-hero" name="email" placeholder="seu@email.com" required>
+              </div>
+            </div>
+            <button type="submit" class="btn" style="margin-top:16px;">Quero o ebook grátis agora</button>
+          </form>
+          <p class="form-note">100% gratuito. Sem spam. Cancele quando quiser.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- O que você vai aprender -->
+  <section class="benefits">
+    <div class="container">
+      <p class="section-label">Conteúdo</p>
+      <h2>O que você vai aprender</h2>
+      <div class="divider"></div>
+
+      <div class="benefits-grid">
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">01</p>
+            <h3>O que é o Claude Code e o que ele faz de diferente</h3>
+            <p>Por que essa ferramenta funciona diferente das outras IAs e por que isso importa pra criação de conteúdo.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">02</p>
+            <h3>Como instalar e configurar em menos de 10 minutos</h3>
+            <p>Passo a passo de instalação mesmo sem saber programar. O que você precisa pra começar hoje.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">03</p>
+            <h3>Como dar instruções que a IA realmente entende</h3>
+            <p>Por que pedidos vagos geram resultados vagos, e como escrever a instrução certa da primeira vez.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">04</p>
+            <h3>Como montar a estrutura do carrossel antes de escrever</h3>
+            <p>Gancho, desenvolvimento, CTA. O método pra ter clareza antes de gerar qualquer texto.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">05</p>
+            <h3>Como gerar cada slide com controle total do tom</h3>
+            <p>Por que fazer um card de cada vez e como corrigir o rumo antes de avançar.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">06</p>
+            <h3>Como revisar, ajustar e finalizar sem travar</h3>
+            <p>O processo de revisão que garante que o carrossel soa como você, não como uma IA genérica.</p>
+          </div>
+        </div>
+
+        <div class="benefit fade-up" style="grid-column: span 2;">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <p class="benefit-num">07</p>
+            <h3>O que fazer depois de publicar pra aprender com cada post</h3>
+            <p>Como analisar o que funcionou e melhorar o processo na próxima vez. Consistência que gera resultado.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Para quem é -->
+  <section>
+    <div class="container">
+      <p class="section-label">Público</p>
+      <h2>Esse ebook é pra você se...</h2>
+      <div class="divider"></div>
+
+      <div class="audience-grid">
+
+        <div class="audience-card fade-up">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Você já tentou criar conteúdo, travou sem saber por onde começar e acabou não publicando nada.</p>
+        </div>
+
+        <div class="audience-card fade-up">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Você já pagou por agência ou curso de marketing digital e o resultado não veio como prometido.</p>
+        </div>
+
+        <div class="audience-card fade-up">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <p>Você quer usar IA de forma concreta no dia a dia, mas não sabe qual ferramenta usar nem como começar.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre o autor -->
+  <section class="author">
+    <div class="container">
+      <div class="author-grid">
+
+        <div class="author-photo-wrap">
+          <img src="foto-ednei.png" alt="Ednei Marinho" loading="lazy"
+               style="width:240px;height:280px;object-fit:cover;object-position:center top;
+                      border-radius:6px;position:relative;z-index:1;display:block;">
+        </div>
+
+        <div class="fade-up">
+          <p class="section-label">Autor</p>
+          <p class="author-name">Ednei Marinho</p>
+          <p class="author-role">Atitude e Progresso</p>
+          <div class="author-bio">
+            <p>Brasileiro morando no Canadá há 6 anos. Trabalho na construção civil de dia e construo meu negócio digital nas bordas do tempo.</p>
+            <p>O conteúdo que produzo não vem de teoria. Vem do processo real de quem está no meio do caminho, aprendendo com o que funciona e descartando o que não funciona.</p>
+            <p>Sem guru, sem promessa de fórmula mágica. Só método aplicado na prática.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Atitude e Progresso. Todos os direitos reservados.</p>
+      <a href="https://www.atitudeeprogresso.com.br" target="_blank" rel="noopener">atitudeeprogresso.com.br</a>
+    </div>
+  </footer>
+
+</div><!-- .page -->
+
+<script>
+  // ── Particle network canvas ──────────────────────────────────────────────
+  (function () {
+    const canvas = document.getElementById('canvas-bg');
+    const ctx    = canvas.getContext('2d');
+
+    const PARTICLE_COUNT = 60;
+    const MAX_DIST       = 140;
+    const SPEED          = 0.28;
+
+    const GOLD  = 'rgba(212,175,55,';
+    const GREEN = 'rgba(6,68,32,';
+
+    let W, H, particles;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function rand(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function makeParticle() {
+      const useGold = Math.random() > 0.45;
+      return {
+        x:    rand(0, W),
+        y:    rand(0, H),
+        vx:   rand(-SPEED, SPEED),
+        vy:   rand(-SPEED, SPEED),
+        r:    rand(1, 2.2),
+        color: useGold ? GOLD : GREEN,
+        alpha: rand(0.25, 0.55),
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: PARTICLE_COUNT }, makeParticle);
+    }
+
+    function drawDot(p) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+    }
+
+    function drawLine(a, b, dist) {
+      const alpha = (1 - dist / MAX_DIST) * 0.12;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = GOLD + alpha + ')';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < -10)  p.x = W + 10;
+        if (p.x > W+10) p.x = -10;
+        if (p.y < -10)  p.y = H + 10;
+        if (p.y > H+10) p.y = -10;
+
+        drawDot(p);
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const q    = particles[j];
+          const dx   = p.x - q.x;
+          const dy   = p.y - q.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) drawLine(p, q, dist);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('resize', () => {
+      resize();
+      particles.forEach(p => {
+        if (p.x > W) p.x = rand(0, W);
+        if (p.y > H) p.y = rand(0, H);
+      });
+    });
+
+    init();
+    tick();
+  })();
+
+  // ── Formspree + redirecionamento manual ─────────────────────────────────
+  (function () {
+    const form = document.getElementById('form-ebook');
+    if (!form) return;
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          window.location.href = 'https://teal-dolphin-ef6f3c.netlify.app/obrigado.html';
+        } else {
+          btn.textContent = 'Erro. Tente novamente.';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Erro. Tente novamente.';
+        btn.disabled = false;
+      }
+    });
+  })();
+
+  // ── Scroll fade-in ───────────────────────────────────────────────────────
+  (function () {
+    const els = document.querySelectorAll('.fade-up');
+    const io  = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+  })();
+</script>
+
+</body>
+</html>
