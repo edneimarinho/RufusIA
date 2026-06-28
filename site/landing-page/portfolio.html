@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio | Ednei Marinho</title>
+  <meta name="description" content="Projetos de presença digital e sites criados por Ednei Marinho com IA." />
+  <link rel="icon" href="https://www.atitudeeprogresso.com.br/logo-icon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:   #064420;
+      --dourado: #D4AF37;
+      --preto:   #080e0b;
+      --branco:  #F8F5F0;
+      --cinza:   #9aab9f;
+    }
+
+    html, body { min-height: 100%; background: var(--preto); font-family: 'Inter', sans-serif; color: var(--branco); }
+
+    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%; }
+
+    header {
+      position: relative; z-index: 1;
+      padding: 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1100px; margin: 0 auto;
+    }
+
+    .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .logo img { height: 32px; }
+    .logo span { font-size: 0.95rem; font-weight: 700; color: var(--branco); }
+    .logo span em { color: var(--dourado); font-style: normal; }
+
+    .nav-back {
+      font-size: 0.85rem; color: var(--cinza); text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--dourado); }
+
+    main {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .label {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      color: var(--dourado); text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    h1 span { color: var(--dourado); }
+
+    .hero-sub {
+      font-size: 1rem; color: var(--cinza); max-width: 500px; margin: 0 auto;
+      line-height: 1.7; font-weight: 300;
+    }
+
+    /* GRID DE PROJETOS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(6,68,32,0.12);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,175,55,0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .card-preview {
+      width: 100%; height: 200px;
+      background: rgba(6,68,32,0.25);
+      display: flex; align-items: center; justify-content: center;
+      border-bottom: 1px solid rgba(212,175,55,0.08);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-preview iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1280px;
+      height: 800px;
+      border: none;
+      transform-origin: top left;
+      pointer-events: none;
+    }
+
+    .preview-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.65rem; cursor: pointer; padding: 1rem;
+      transition: background 0.2s;
+    }
+    .preview-placeholder:hover { background: rgba(212,175,55,0.04); }
+    .preview-dots { display: flex; gap: 4px; }
+    .preview-dots span { display: block; width: 7px; height: 7px; border-radius: 50%; }
+    .preview-lines { display: flex; flex-direction: column; gap: 5px; width: 100%; max-width: 200px; }
+    .preview-lines div { border-radius: 3px; background: rgba(212,175,55,0.12); height: 6px; }
+    .preview-hint { font-size: 0.7rem; color: var(--cinza); border: 1px solid rgba(212,175,55,0.2); padding: 0.3rem 0.7rem; border-radius: 4px; }
+
+    .card-body { padding: 1.5rem; }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--dourado);
+      background: rgba(212,175,55,0.1);
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-titulo {
+      font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem; color: var(--cinza); line-height: 1.6;
+      font-weight: 300; margin-bottom: 1.25rem;
+    }
+
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card-tech {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+    }
+
+    .tech-tag {
+      font-size: 0.65rem; color: var(--cinza);
+      background: rgba(154,171,159,0.1);
+      padding: 2px 8px; border-radius: 4px;
+    }
+
+    .btn-ver {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--preto); background: var(--dourado);
+      padding: 8px 18px; border-radius: 8px;
+      text-decoration: none; white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .btn-ver:hover { opacity: 0.85; }
+
+    .btn-breve {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--cinza); background: rgba(154,171,159,0.1);
+      padding: 8px 18px; border-radius: 8px;
+      white-space: nowrap; cursor: default;
+    }
+
+    .cta {
+      margin-top: 4rem; text-align: center;
+      background: rgba(6,68,32,0.2);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 16px; padding: 3rem 2rem;
+    }
+
+    .cta h2 { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .cta h2 span { color: var(--dourado); }
+    .cta p { font-size: 0.9rem; color: var(--cinza); margin-bottom: 1.5rem; font-weight: 300; }
+
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--dourado); color: var(--preto);
+      font-size: 0.9rem; font-weight: 800;
+      padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+
+    .btn-cta:hover { opacity: 0.85; }
+
+    @media (max-width: 600px) {
+      main { padding: 2rem 1.25rem 4rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<header>
+  <a href="https://www.atitudeeprogresso.com.br" class="logo">
+    <img src="https://www.atitudeeprogresso.com.br/logo-icon.png" alt="Atitude e Progresso" />
+    <span>Atitude e <em>Progresso</em></span>
+  </a>
+  <a href="https://www.atitudeeprogresso.com.br" class="nav-back">← Voltar ao site</a>
+</header>
+
+<main>
+  <div class="hero">
+    <span class="label">Projetos entregues</span>
+    <h1>Sites criados com <span>IA</span></h1>
+    <p class="hero-sub">Presença digital real para negócios de brasileiros. Cada projeto entregue funcionando, sem enrolação.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- PROJETO 1, AUTO MECÂNICA VITOR -->
+    <div class="card">
+      <div class="card-preview">
+        <div class="preview-placeholder" onclick="loadPreview(this,'https://www.automecanicavitor.com.br','Auto Mecânica Vitor')">
+          <div class="preview-dots"><span style="background:rgba(255,90,90,0.35)"></span><span style="background:rgba(255,190,40,0.35)"></span><span style="background:rgba(40,200,80,0.35)"></span></div>
+          <div class="preview-lines"><div style="width:85%"></div><div style="width:65%"></div><div style="width:75%"></div><div style="width:55%"></div></div>
+          <span class="preview-hint">Ver prévia</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Site institucional</span>
+        <div class="card-titulo">Auto Mecânica Vitor</div>
+        <div class="card-desc">Site profissional para mecânica em São Paulo. Apresenta os serviços, localização e contato direto pelo WhatsApp.</div>
+        <div class="card-footer">
+          <div class="card-tech">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">Claude AI</span>
+          </div>
+          <a href="https://www.automecanicavitor.com.br" target="_blank" rel="noopener" class="btn-ver">Ver site →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETO 2, FOX RENOVATIONS -->
+    <div class="card">
+      <div class="card-preview">
+        <div class="preview-placeholder" onclick="loadPreview(this,'https://foxrenovations.ca','Fox Renovations')">
+          <div class="preview-dots"><span style="background:rgba(255,90,90,0.35)"></span><span style="background:rgba(255,190,40,0.35)"></span><span style="background:rgba(40,200,80,0.35)"></span></div>
+          <div class="preview-lines"><div style="width:80%"></div><div style="width:70%"></div><div style="width:60%"></div><div style="width:78%"></div></div>
+          <span class="preview-hint">Ver prévia</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag">Presença digital</span>
+        <div class="card-titulo">Fox Renovations</div>
+        <div class="card-desc">Site para empresa de construção e renovação no Canadá. Página de serviços, portfólio e captação de leads pelo WhatsApp.</div>
+        <div class="card-footer">
+          <div class="card-tech">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">Claude AI</span>
+          </div>
+          <a href="https://foxrenovations.ca" target="_blank" rel="noopener" class="btn-ver">Ver site →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>Quer um site assim pro <span>seu negócio?</span></h2>
+    <p>Entrego funcionando, te ensino a usar e não cobra caro por isso.</p>
+    <a href="https://wa.me/14377714110?text=Oi%20Ednei%2C%20vi%20o%20portfólio%20e%20quero%20saber%20mais" target="_blank" rel="noopener" class="btn-cta">
+      Falar no WhatsApp
+    </a>
+  </div>
+</main>
+
+<script>
+  function loadPreview(placeholder, src, title) {
+    const container = placeholder.parentElement;
+    container.removeChild(placeholder);
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.title = title;
+    iframe.scrolling = 'no';
+    Object.assign(iframe.style, {
+      position: 'absolute', top: '0', left: '0',
+      width: '1280px', height: '800px',
+      border: 'none', transformOrigin: 'top left', pointerEvents: 'none'
+    });
+    container.appendChild(iframe);
+    iframe.style.transform = `scale(${container.offsetWidth / 1280})`;
+  }
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.card-preview').forEach(container => {
+      const iframe = container.querySelector('iframe');
+      if (!iframe) return;
+      iframe.style.transform = `scale(${container.offsetWidth / 1280})`;
+    });
+  });
+</script>
+
+<script>
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    const COUNT = 40, MAX_DIST = 130;
+    const GOLD = 'rgba(212,175,55,', GREEN = 'rgba(10,97,48,';
+    const pts = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+    }));
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < COUNT; i++) {
+        const p = pts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        for (let j = i + 1; j < COUNT; j++) {
+          const q = pts[j];
+          const d = Math.hypot(p.x - q.x, p.y - q.y);
+          if (d < MAX_DIST) {
+            const a = 1 - d / MAX_DIST;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = GOLD + (a * 0.15) + ')';
+            ctx.lineWidth = 0.5; ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = GREEN + '0.6)'; ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+</script>
+
+<!-- CHATVOLT CHATBOT - lazy load após interação ou 5s -->
+<script>
+  (function() {
+    var loaded = false;
+    function loadChat() {
+      if (loaded) return;
+      loaded = true;
+      import('https://cdn.jsdelivr.net/npm/@chatvolt/embeds@latest/dist/chatbox/index.js')
+        .then(function(m) { m.default.initBubble({ agentId: 'cmiuwp8ns0g69kq2i1w5tvwh5' }); });
+    }
+    setTimeout(loadChat, 5000);
+    ['mousemove','keydown','touchstart','scroll'].forEach(function(e) {
+      document.addEventListener(e, loadChat, { once: true, passive: true });
+    });
+  })();
+</script>
+</body>
+</html>

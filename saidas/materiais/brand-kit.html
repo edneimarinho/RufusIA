@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand Kit — Atitude e Progresso</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+    :root {
+      --verde:      #064420;
+      --verde-mid:  #0a6130;
+      --dourado:    #D4AF37;
+      --dourado-2:  #f0cc55;
+      --preto:      #1C1C1C;
+      --preto-site: #080e0b;
+      --off-white:  #F8F5F0;
+      --cinza:      #B2B2B2;
+      --borda:      #dde5e0;
+      --fundo:      #f7f9f8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5pt;
+      color: #1a1a1a;
+      background: white;
+      line-height: 1.65;
+    }
+
+    /* ── CAPA ── */
+    .capa {
+      background: var(--preto);
+      color: white;
+      padding: 52px 56px 44px;
+      page-break-after: always;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .capa-logo-text { font-size: 11pt; font-weight: 700; color: var(--dourado); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .capa-centro { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 50px 0 30px; }
+
+    .capa-tag {
+      display: inline-block;
+      font-size: 8pt; font-weight: 600; color: var(--dourado);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.4); border-radius: 20px;
+      padding: 4px 14px; margin-bottom: 24px; width: fit-content;
+    }
+
+    .capa h1 {
+      font-size: 34pt; font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.04em; color: white; margin-bottom: 20px;
+    }
+    .capa h1 em { color: var(--dourado); font-style: normal; }
+
+    .capa-sub { font-size: 11pt; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 480px; line-height: 1.7; }
+
+    /* preview de cores na capa */
+    .capa-cores {
+      display: flex; gap: 12px; margin-top: 48px; align-items: flex-end;
+    }
+
+    .capa-cor {
+      border-radius: 8px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 10px 12px;
+      min-width: 80px;
+    }
+
+    .capa-cor-hex { font-size: 7.5pt; font-weight: 700; letter-spacing: 0.04em; opacity: 0.85; }
+    .capa-cor-nome { font-size: 6.5pt; font-weight: 400; opacity: 0.6; margin-top: 2px; }
+
+    .capa-rodape { font-size: 8pt; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; }
+
+    /* ── PÁGINAS ── */
+    .pagina { padding: 44px 56px; max-width: 860px; margin: 0 auto; }
+
+    .secao { margin-bottom: 40px; page-break-inside: avoid; }
+
+    .secao-titulo {
+      font-size: 7pt; font-weight: 700; color: var(--dourado);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 16px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    /* cores */
+    .cores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .cor-card { border-radius: 10px; overflow: hidden; border: 1px solid var(--borda); }
+
+    .cor-amostra { height: 80px; }
+
+    .cor-info { padding: 12px 14px; background: white; }
+
+    .cor-nome { font-size: 9pt; font-weight: 700; margin-bottom: 2px; }
+
+    .cor-hex {
+      font-size: 8pt; color: #555;
+      font-family: 'Courier New', monospace; margin-bottom: 6px;
+    }
+
+    .cor-uso { font-size: 7.5pt; color: #777; font-weight: 300; line-height: 1.5; }
+
+    .cor-proibida { border: 2px solid #ef4444; }
+    .cor-proibida .cor-nome { color: #dc2626; }
+
+    /* tipografia */
+    .tipo-demo {
+      background: var(--preto);
+      border-radius: 10px;
+      padding: 28px 30px;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .tipo-titulo-demo {
+      font-size: 28pt;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .tipo-titulo-demo span { color: var(--dourado); }
+
+    .tipo-sub-demo {
+      font-size: 11pt;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+
+    .tipo-tabela { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+
+    .tipo-tabela th {
+      text-align: left; font-size: 7pt; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: #888;
+      padding: 6px 10px; border-bottom: 2px solid var(--borda);
+    }
+
+    .tipo-tabela td {
+      padding: 8px 10px; border-bottom: 1px solid var(--borda);
+      vertical-align: middle; font-weight: 300;
+    }
+
+    .tipo-tabela td:first-child { font-weight: 600; }
+
+    /* botões */
+    .botoes-demo { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+
+    .btn-demo-dourado {
+      background: var(--dourado); color: #1a1a1a;
+      font-family: 'Inter', sans-serif; font-size: 9pt; font-weight: 700;
+      border: none; border-radius: 6px; padding: 10px 20px; cursor: default;
+    }
+
+    .btn-demo-outline {
+      background: transparent; color: var(--dourado);
+      font-family: 'Inter', sans-serif; font-size: 9pt; font-weight: 700;
+      border: 1.5px solid var(--dourado); border-radius: 6px; padding: 10px 20px; cursor: default;
+    }
+
+    .btn-demo-verde {
+      background: var(--verde); color: var(--dourado);
+      font-family: 'Inter', sans-serif; font-size: 9pt; font-weight: 700;
+      border: none; border-radius: 6px; padding: 10px 20px; cursor: default;
+    }
+
+    /* regras */
+    .regras-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .regra-card {
+      border-radius: 8px;
+      padding: 16px 18px;
+      border: 1px solid var(--borda);
+    }
+
+    .regra-card.pode { border-left: 3px solid #16a34a; }
+    .regra-card.nao-pode { border-left: 3px solid #dc2626; }
+
+    .regra-titulo {
+      font-size: 7.5pt; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 10px;
+    }
+
+    .regra-titulo.pode { color: #166534; }
+    .regra-titulo.nao-pode { color: #991b1b; }
+
+    .regra-lista { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+
+    .regra-lista li {
+      display: flex; align-items: flex-start; gap: 7px;
+      font-size: 8.5pt; font-weight: 300; color: #2a2a2a; line-height: 1.55;
+    }
+
+    .regra-lista.pode li::before { content: '✓'; color: #16a34a; font-weight: 700; flex-shrink: 0; }
+    .regra-lista.nao-pode li::before { content: '✕'; color: #dc2626; font-weight: 700; flex-shrink: 0; }
+
+    /* logo uso */
+    .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .logo-card {
+      border-radius: 10px; overflow: hidden; border: 1px solid var(--borda);
+    }
+
+    .logo-preview {
+      height: 120px; display: flex; align-items: center; justify-content: center;
+      font-size: 9pt; color: rgba(255,255,255,0.4);
+    }
+
+    .logo-info { padding: 12px 14px; background: white; }
+    .logo-cenario { font-size: 8.5pt; font-weight: 700; margin-bottom: 4px; }
+    .logo-desc { font-size: 8pt; color: #777; font-weight: 300; line-height: 1.5; }
+
+    /* thumbnail */
+    .thumb-demo {
+      background: var(--verde);
+      border-radius: 10px;
+      padding: 0;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .thumb-texto {
+      position: absolute; left: 32px; top: 50%; transform: translateY(-50%);
+      z-index: 2; max-width: 55%;
+    }
+
+    .thumb-tag-demo {
+      font-size: 7pt; font-weight: 700; color: var(--dourado);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.5); border-radius: 20px;
+      padding: 3px 10px; display: inline-block; margin-bottom: 10px;
+    }
+
+    .thumb-titulo {
+      font-size: 16pt; font-weight: 900; color: white;
+      line-height: 1.15; letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+
+    .thumb-titulo span { color: var(--dourado); }
+
+    .thumb-foto {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 45%;
+      background: linear-gradient(135deg, rgba(6,68,32,0.3), rgba(6,68,32,0.8));
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .thumb-foto-placeholder {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(212,175,55,0.2);
+      border: 2px solid rgba(212,175,55,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28pt; color: rgba(212,175,55,0.5);
+    }
+
+    .thumb-logo-rod {
+      position: absolute; bottom: 12px; left: 32px;
+      font-size: 7pt; font-weight: 700; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* identidades */
+    .identidade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .identidade-card { border: 1px solid var(--borda); border-radius: 8px; padding: 16px 18px; }
+
+    .identidade-titulo { font-size: 9pt; font-weight: 700; margin-bottom: 8px; }
+
+    .identidade-desc { font-size: 8.5pt; color: #555; font-weight: 300; line-height: 1.6; }
+
+    .identidade-tag {
+      display: inline-block; font-size: 6.5pt; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      border-radius: 4px; padding: 2px 8px; margin-bottom: 8px;
+    }
+
+    .identidade-tag.pessoal { background: rgba(6,68,32,0.1); color: var(--verde); }
+    .identidade-tag.negocio { background: rgba(212,175,55,0.15); color: #8a6f00; }
+
+    /* rodapé */
+    .rodape {
+      margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--borda);
+      font-size: 7.5pt; color: #999;
+      display: flex; justify-content: space-between;
+    }
+
+    @media print {
+      .capa { min-height: unset; height: 100vh; }
+      .pagina { padding: 32px 44px; }
+      .secao { page-break-inside: avoid; }
+      @page { size: A4; margin: 0; }
+      @page :first { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ CAPA ══════════════════════════════════════════════════════════════ -->
+<div class="capa">
+  <div class="capa-logo-text">Atitude e Progresso · Ednei Marinho</div>
+
+  <div class="capa-centro">
+    <div class="capa-tag">Identidade visual</div>
+    <h1>Brand<br><em>Kit</em></h1>
+    <p class="capa-sub">Cores, tipografia, botões, logo e padrão visual da marca. Referência para qualquer material gerado — site, proposta, carrossel, thumbnail.</p>
+
+    <div class="capa-cores">
+      <div class="capa-cor" style="background:#1C1C1C;height:72px;">
+        <span class="capa-cor-hex" style="color:rgba(255,255,255,0.7)">#1C1C1C</span>
+        <span class="capa-cor-nome" style="color:rgba(255,255,255,0.4)">Preto grafite</span>
+      </div>
+      <div class="capa-cor" style="background:#064420;height:64px;">
+        <span class="capa-cor-hex" style="color:rgba(255,255,255,0.7)">#064420</span>
+        <span class="capa-cor-nome" style="color:rgba(255,255,255,0.4)">Verde esmeralda</span>
+      </div>
+      <div class="capa-cor" style="background:#D4AF37;height:56px;">
+        <span class="capa-cor-hex" style="color:rgba(0,0,0,0.7)">#D4AF37</span>
+        <span class="capa-cor-nome" style="color:rgba(0,0,0,0.4)">Dourado champagne</span>
+      </div>
+      <div class="capa-cor" style="background:#F8F5F0;height:48px;border:1px solid rgba(255,255,255,0.1)">
+        <span class="capa-cor-hex" style="color:rgba(0,0,0,0.5)">#F8F5F0</span>
+        <span class="capa-cor-nome" style="color:rgba(0,0,0,0.3)">Off white</span>
+      </div>
+      <div class="capa-cor" style="background:#B2B2B2;height:44px;">
+        <span class="capa-cor-hex" style="color:rgba(0,0,0,0.6)">#B2B2B2</span>
+        <span class="capa-cor-nome" style="color:rgba(0,0,0,0.35)">Cinza urbano</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="capa-rodape">Atitude e Progresso · atitudeeprogresso.com · Uso interno</div>
+</div>
+
+<!-- ══ CONTEÚDO ══════════════════════════════════════════════════════════ -->
+<div class="pagina">
+
+  <!-- CORES -->
+  <div class="secao">
+    <div class="secao-titulo">Paleta de cores</div>
+    <div class="cores-grid">
+
+      <div class="cor-card">
+        <div class="cor-amostra" style="background:#1C1C1C"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Preto grafite</div>
+          <div class="cor-hex">#1C1C1C</div>
+          <div class="cor-uso">Fundo principal de todos os materiais. Base da identidade escura.</div>
+        </div>
+      </div>
+
+      <div class="cor-card">
+        <div class="cor-amostra" style="background:#064420"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Verde esmeralda</div>
+          <div class="cor-hex">#064420</div>
+          <div class="cor-uso">Fundo alternativo, cards, seções de destaque. Cor principal do site.</div>
+        </div>
+      </div>
+
+      <div class="cor-card">
+        <div class="cor-amostra" style="background:#D4AF37"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Dourado champagne</div>
+          <div class="cor-hex">#D4AF37</div>
+          <div class="cor-uso">Destaque, CTA, bordas, ícones, texto de ênfase. Cor de ação.</div>
+        </div>
+      </div>
+
+      <div class="cor-card">
+        <div class="cor-amostra" style="background:#F8F5F0;border-bottom:1px solid #eee"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Off white</div>
+          <div class="cor-hex">#F8F5F0</div>
+          <div class="cor-uso">Texto principal sobre fundo escuro. Nunca usar branco puro (#FFF).</div>
+        </div>
+      </div>
+
+      <div class="cor-card">
+        <div class="cor-amostra" style="background:#B2B2B2"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Cinza urbano</div>
+          <div class="cor-hex">#B2B2B2</div>
+          <div class="cor-uso">Texto secundário, legendas, placeholders, informações de apoio.</div>
+        </div>
+      </div>
+
+      <div class="cor-card cor-proibida">
+        <div class="cor-amostra" style="background:linear-gradient(135deg,#ff0080,#00ffff,#ffff00)"></div>
+        <div class="cor-info">
+          <div class="cor-nome">Cores vibrantes / neon</div>
+          <div class="cor-hex">Proibido</div>
+          <div class="cor-uso">Destroem a identidade séria e premium. Incluindo branco puro (#FFFFFF).</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TIPOGRAFIA -->
+  <div class="secao">
+    <div class="secao-titulo">Tipografia</div>
+
+    <div class="tipo-demo">
+      <div class="tipo-titulo-demo">Marketing digital<br><span>com profundidade</span> real.</div>
+      <div class="tipo-sub-demo">Sem guru, sem atalho falso. Para quem quer construir resultado consistente.</div>
+    </div>
+
+    <table class="tipo-tabela">
+      <thead>
+        <tr>
+          <th>Elemento</th>
+          <th>Fonte</th>
+          <th>Peso</th>
+          <th>Uso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Títulos principais</td>
+          <td>Inter</td>
+          <td>Black / 900</td>
+          <td>Headlines, h1, texto em thumbnail, nome da seção</td>
+        </tr>
+        <tr>
+          <td>Subtítulos</td>
+          <td>Inter</td>
+          <td>Bold / 700</td>
+          <td>h2, h3, labels de card, nome de item</td>
+        </tr>
+        <tr>
+          <td>Corpo de texto</td>
+          <td>Inter</td>
+          <td>Regular / 400</td>
+          <td>Parágrafos, descrições</td>
+        </tr>
+        <tr>
+          <td>Texto de apoio</td>
+          <td>Inter</td>
+          <td>Light / 300</td>
+          <td>Legendas, detalhes, notas secundárias</td>
+        </tr>
+        <tr>
+          <td>Labels / tags</td>
+          <td>Inter</td>
+          <td>Bold / 700 + maiúscula</td>
+          <td>Rótulos de seção, status, categorias</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BOTÕES -->
+  <div class="secao">
+    <div class="secao-titulo">Botões</div>
+
+    <div style="background:var(--preto);border-radius:10px;padding:24px 28px;margin-bottom:14px">
+      <div class="botoes-demo">
+        <button class="btn-demo-dourado">Quero saber mais</button>
+        <button class="btn-demo-outline">Ver detalhes</button>
+        <button class="btn-demo-verde">Agendar conversa</button>
+      </div>
+    </div>
+
+    <table class="tipo-tabela">
+      <thead>
+        <tr><th>Variante</th><th>Fundo</th><th>Texto</th><th>Quando usar</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Primário (dourado)</td>
+          <td>#D4AF37</td>
+          <td>#1C1C1C escuro</td>
+          <td>CTA principal — ação mais importante da página</td>
+        </tr>
+        <tr>
+          <td>Outline (dourado)</td>
+          <td>Transparente</td>
+          <td>#D4AF37</td>
+          <td>CTA secundário — ação alternativa ou menos urgente</td>
+        </tr>
+        <tr>
+          <td>Verde</td>
+          <td>#064420</td>
+          <td>#D4AF37</td>
+          <td>Ações em cards escuros ou seções de destaque</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p style="font-size:8pt;color:#777;margin-top:10px;font-weight:300">Border-radius dos botões: 6–8px. Nunca totalmente arredondado (pill) — destoa da identidade quadrada.</p>
+  </div>
+
+  <!-- LOGO E IDENTIDADES -->
+  <div class="secao">
+    <div class="secao-titulo">Logo e identidades da marca</div>
+
+    <div class="identidade-grid" style="margin-bottom:20px">
+      <div class="identidade-card">
+        <div class="identidade-tag pessoal">Marca pessoal</div>
+        <div class="identidade-titulo">Ednei Marinho</div>
+        <div class="identidade-desc">Usado no canal YouTube (@ednei.marinho), redes sociais pessoais e conteúdo. Usar foto pessoal do Ednei — nunca a logo da agência. É o rosto da marca.</div>
+      </div>
+      <div class="identidade-card">
+        <div class="identidade-tag negocio">Agência / negócio</div>
+        <div class="identidade-titulo">Atitude e Progresso</div>
+        <div class="identidade-desc">Usado em materiais de cliente, propostas comerciais, site da agência e slides de apresentação. A logo AP (monograma verde + círculo dourado) é o símbolo do negócio.</div>
+      </div>
+    </div>
+
+    <div class="logo-grid">
+      <div class="logo-card">
+        <div class="logo-preview" style="background:var(--preto)">
+          <div style="text-align:center">
+            <div style="width:60px;height:60px;border-radius:50%;border:2px solid var(--dourado);background:rgba(212,175,55,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
+              <span style="font-size:16pt;font-weight:900;color:var(--dourado)">AP</span>
+            </div>
+            <div style="font-size:7.5pt;color:rgba(255,255,255,0.5)">Atitude e Progresso</div>
+          </div>
+        </div>
+        <div class="logo-info">
+          <div class="logo-cenario">Logo em fundo escuro</div>
+          <div class="logo-desc">Uso principal. Proposta, slide, material de cliente. Largura entre 120–200px em HTMLs.</div>
+        </div>
+      </div>
+
+      <div class="logo-card">
+        <div class="logo-preview" style="background:var(--fundo)">
+          <div style="text-align:center">
+            <div style="width:60px;height:60px;border-radius:50%;border:2px solid var(--verde);background:rgba(6,68,32,0.08);display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
+              <span style="font-size:16pt;font-weight:900;color:var(--verde)">AP</span>
+            </div>
+            <div style="font-size:7.5pt;color:#777">Atitude e Progresso</div>
+          </div>
+        </div>
+        <div class="logo-info">
+          <div class="logo-cenario">Logo em fundo claro</div>
+          <div class="logo-desc">Uso em documentos impressos ou fundos claros. Manter proporção original.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THUMBNAIL -->
+  <div class="secao">
+    <div class="secao-titulo">Padrão de thumbnail YouTube</div>
+
+    <div class="thumb-demo">
+      <div class="thumb-texto">
+        <div class="thumb-tag-demo">Tutorial</div>
+        <div class="thumb-titulo">Como criar<br>um site com<br><span>IA do zero</span></div>
+      </div>
+      <div class="thumb-foto">
+        <div class="thumb-foto-placeholder">👤</div>
+      </div>
+      <div class="thumb-logo-rod">@ednei.marinho</div>
+    </div>
+
+    <table class="tipo-tabela">
+      <thead>
+        <tr><th>Elemento</th><th>Especificação</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fundo</td><td>Verde esmeralda #064420 com luz verde atrás do Ednei</td></tr>
+        <tr><td>Foto do Ednei</td><td>Centralizada ou à direita — sempre foto pessoal, nunca logo</td></tr>
+        <tr><td>Título</td><td>Bold / Black, branco, maiúscula, à esquerda ou centro, impacto máximo</td></tr>
+        <tr><td>Destaque no título</td><td>Palavra-chave em dourado #D4AF37</td></tr>
+        <tr><td>Subtítulo (opcional)</td><td>Menor, abaixo do título principal, peso médio</td></tr>
+        <tr><td>Rodapé</td><td>@ednei.marinho ou logo da ferramenta usada no vídeo</td></tr>
+        <tr><td>Referência aprovada</td><td>identidade/thumb-referencia-01.png</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PODE / NÃO PODE -->
+  <div class="secao">
+    <div class="secao-titulo">Regras de aplicação</div>
+    <div class="regras-grid">
+      <div class="regra-card pode">
+        <div class="regra-titulo pode">Pode usar</div>
+        <ul class="regra-lista pode">
+          <li>Fundo escuro (#1C1C1C ou #064420) como base</li>
+          <li>Texto em off white (#F8F5F0) — nunca branco puro</li>
+          <li>Dourado como cor de destaque e ações</li>
+          <li>Bordas mínimas em dourado quando necessário</li>
+          <li>Border-radius baixo (4–8px) — estilo quadrado</li>
+          <li>Sombras sutis pra profundidade</li>
+          <li>Layout limpo e estruturado com hierarquia clara</li>
+          <li>Foto pessoal do Ednei em materiais do canal</li>
+        </ul>
+      </div>
+      <div class="regra-card nao-pode">
+        <div class="regra-titulo nao-pode">Nunca usar</div>
+        <ul class="regra-lista nao-pode">
+          <li>Fundo branco em material visual do canal</li>
+          <li>Cores saturadas ou neon em qualquer elemento</li>
+          <li>Layout poluído com muitos elementos simultâneos</li>
+          <li>Fontes manuscritas ou decorativas</li>
+          <li>Estética de "guru de vendas" (carros, relógios, ostentação)</li>
+          <li>Branco puro #FFFFFF — usar off white #F8F5F0</li>
+          <li>Border-radius pill (muito arredondado) em botões</li>
+          <li>Logo da agência no lugar da foto pessoal no YouTube</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- POSICIONAMENTO -->
+  <div class="secao">
+    <div class="secao-titulo">Estilo e posicionamento visual</div>
+    <div style="background:var(--preto);color:white;border-radius:10px;padding:24px 28px">
+      <p style="font-size:10pt;font-weight:700;color:var(--dourado);margin-bottom:10px">Sério · Premium · Anti-guru</p>
+      <p style="font-size:9pt;font-weight:300;color:rgba(255,255,255,0.7);line-height:1.75">
+        Fundo escuro com texto em branco e detalhes dourados. A combinação verde + dourado remete a credibilidade e crescimento sem exagero. Nada de cores vibrantes ou layout caótico. Visual denso e estruturado como o conteúdo — reflete a identidade de quem ensina com profundidade real, sem atalho falso e sem guru.
+      </p>
+      <p style="font-size:9pt;font-weight:300;color:rgba(255,255,255,0.5);margin-top:10px;line-height:1.75">
+        Qualquer material gerado — carrossel, post, proposta, site — deve passar a mesma sensação: competência técnica, honestidade e resultado concreto. Nunca aspecto de "dinheiro fácil" ou de curso online genérico.
+      </p>
+    </div>
+  </div>
+
+  <div class="rodape">
+    <span>Atitude e Progresso · Ednei Marinho</span>
+    <span>Brand Kit · Referência interna</span>
+  </div>
+
+</div>
+</body>
+</html>

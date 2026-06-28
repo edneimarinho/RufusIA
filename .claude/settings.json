@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/atitudeeprogresso/Desktop -name \"rufusia.html\" 2>/dev/null)",
+      "Read(//Users/atitudeeprogresso/Desktop/**)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/identidade/logo.png' /Users/atitudeeprogresso/Desktop/RufusIA/identidade/logo.png)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/identidade/logo-transparent.png' /Users/atitudeeprogresso/Desktop/RufusIA/identidade/logo-transparent.png)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/identidade/Logo fundo transparente.png' /Users/atitudeeprogresso/Desktop/RufusIA/identidade/logo-fundo-transparente.png)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/identidade/IMG_8049.JPG' /Users/atitudeeprogresso/Desktop/RufusIA/identidade/foto-ednei.jpg)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/identidade/brand-kit-briefing.md' /Users/atitudeeprogresso/Desktop/RufusIA/identidade/brand-kit-briefing.md)",
+      "Bash(cp -R '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/landing-page/index.html' /Users/atitudeeprogresso/Desktop/RufusIA/site/landing-page/)",
+      "Bash(cp -R '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/landing-page/portfolio.html' /Users/atitudeeprogresso/Desktop/RufusIA/site/landing-page/)",
+      "Bash(cp -R '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/landing-page/links.html' /Users/atitudeeprogresso/Desktop/RufusIA/site/landing-page/)",
+      "Bash(cp -R '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/landing-page/rufusia.html' /Users/atitudeeprogresso/Desktop/RufusIA/site/landing-page/)",
+      "Bash(cp -R '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/landing-page/robots.txt' /Users/atitudeeprogresso/Desktop/RufusIA/site/landing-page/)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/escopo-entrega-presenca-digital.md' /Users/atitudeeprogresso/Desktop/RufusIA/saidas/materiais/)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/escopo-entrega-presenca-digital.html' /Users/atitudeeprogresso/Desktop/RufusIA/saidas/materiais/)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/brand-kit.html' /Users/atitudeeprogresso/Desktop/RufusIA/saidas/materiais/)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/qrcode-evento.html' /Users/atitudeeprogresso/Desktop/RufusIA/saidas/materiais/)",
+      "Bash(cp '/Users/atitudeeprogresso/Desktop/Atitude e Progresso/atitude-e-progresso/saidas/script-prospeccao.html' /Users/atitudeeprogresso/Desktop/RufusIA/saidas/materiais/)",
+      "Edit(/.claude/skills/roteiro-youtube/**)",
+      "Edit(/.claude/skills/email-marketing/**)",
+      "Edit(/.claude/skills/pipeline-semanal/**)",
+      "WebSearch",
+      "Bash(NODE_PATH=\"/Users/atitudeeprogresso/.npm/_npx/e41f203b7505f1fb/node_modules\" node render.js)",
+      "Edit(/.claude/skills/carrossel/**)"
+    ]
+  }
+}

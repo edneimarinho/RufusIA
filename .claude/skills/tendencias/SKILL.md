@@ -16,6 +16,7 @@ Pesquisa o que está em alta no nicho → filtra pelo contexto do negócio → e
 
 - **Contexto do negócio:** `_memoria/empresa.md` — LER ANTES pra calibrar o nicho
 - **Tom de voz:** `_memoria/preferencias.md`
+- **Fontes de referência:** `_memoria/fontes-gringas.md` — LER ANTES pra saber quais criadores e newsletters pesquisar
 - **Output vai em:** `saidas/tendencias/tendencias-<YYYY-MM-DD>.md`
 
 ---
@@ -31,14 +32,20 @@ Se o usuário quiser focar em subnicho específico, perguntar:
 
 ### Passo 2 — Pesquisar tendências
 
-Fazer buscas nas seguintes fontes via WebSearch:
+Ler `_memoria/fontes-gringas.md` pra saber quais criadores e newsletters usar como referência.
 
-1. **Tendências de IA e ferramentas:** novidades de modelos, ferramentas, lançamentos da semana
-2. **Marketing digital em alta:** o que criadores de conteúdo do nicho estão publicando
-3. **Perguntas frequentes:** o que brasileiros estão perguntando sobre o tema (Reddit, YouTube, Quora)
-4. **Polêmicas e debates:** o que está gerando discussão no nicho agora
+Fazer buscas via WebSearch em duas camadas:
 
-Fazer no mínimo 3 buscas distintas antes de montar a lista.
+**Camada 1 — Fontes gringas (prioridade):**
+1. O que os criadores listados em `fontes-gringas.md` publicaram na última semana (Matt Wolfe, Alex Hormozi, Dan Koe, etc.)
+2. Temas em alta nas newsletters (Ben's Bites, The Neuron, TLDR AI)
+3. Novidades de ferramentas e modelos de IA (Claude, ChatGPT, lançamentos)
+
+**Camada 2 — Contexto brasileiro:**
+4. O que brasileiros estão perguntando sobre o tema (Reddit, YouTube, Quora)
+5. Polêmicas e debates no nicho em português
+
+Fazer no mínimo 4 buscas distintas (2 em inglês, 2 em português) antes de montar a lista.
 
 ### Passo 3 — Filtrar e selecionar
 

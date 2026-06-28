@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #111; }
+
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 80px;
+  }
+
+  .logo {
+    position: absolute;
+    top: 48px;
+    left: 60px;
+    width: 60px;
+    height: auto;
+    z-index: 10;
+  }
+
+  .logo-dark {
+    filter: brightness(0) saturate(100%);
+  }
+
+  /* ── EYEBROW ── */
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    margin-bottom: 20px;
+  }
+
+  /* ── RÉGUA ── */
+  .regua {
+    width: 64px;
+    height: 3px;
+    margin: 24px 0;
+  }
+
+  /* ── H2 ── */
+  .slide h2 {
+    font-weight: 800;
+    font-size: 64px;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+
+  /* ── BODY TEXT ── */
+  .slide p {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  /* ── HANDLE ── */
+  .handle {
+    position: absolute;
+    bottom: 48px;
+    left: 60px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════
+     SLIDE 1 — CAPA (foto + gradient)
+     ══════════════════════════════════ */
+  .slide-1 {
+    background-image:
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.05) 35%,
+        rgba(0,0,0,0.55) 60%,
+        rgba(0,0,0,0.82) 80%,
+        rgba(0,0,0,0.92) 100%
+      ),
+      url('foto-capa.png');
+    background-size: cover;
+    background-position: center top;
+    justify-content: flex-end;
+    padding-bottom: 100px;
+  }
+  .slide-1 .eyebrow { color: #D4AF37; }
+  .slide-1 h1 {
+    font-size: 92px;
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+  .slide-1 .subtitle {
+    font-size: 22px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.5;
+    max-width: 700px;
+  }
+  .slide-1 .regua-capa {
+    width: 64px;
+    height: 3px;
+    background: #D4AF37;
+    margin: 16px 0;
+  }
+  .slide-1 .handle { color: rgba(255,255,255,0.6); }
+
+  /* ══════════════════════════════════
+     SLIDE 2 — NÚMERO (fundo escuro)
+     ══════════════════════════════════ */
+  .slide-2 {
+    background: #1C1C1C;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .slide-2 .big-number {
+    font-size: 280px;
+    font-weight: 800;
+    color: #D4AF37;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .slide-2 .big-number span {
+    font-size: 140px;
+  }
+  .slide-2 h2 { color: #F8F5F0; margin-bottom: 16px; font-size: 48px; }
+  .slide-2 p { color: #B2B2B2; max-width: 800px; }
+  .slide-2 .handle { color: #555; }
+
+  /* ══════════════════════════════════
+     SLIDE 3 — SOLO (fundo cream)
+     ══════════════════════════════════ */
+  .slide-3 {
+    background: #F5ECD7;
+    gap: 8px;
+  }
+  .slide-3 .eyebrow { color: #D4AF37; }
+  .slide-3 .regua { background: #D4AF37; }
+  .slide-3 h2 { color: #1A1A1A; margin-bottom: 8px; }
+  .slide-3 p { color: #444; max-width: 820px; }
+  .slide-3 .handle { color: #999; }
+
+  /* ══════════════════════════════════
+     SLIDE 4 — CITAÇÃO (fundo verde)
+     ══════════════════════════════════ */
+  .slide-4 {
+    background: #064420;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .slide-4 .quote-mark {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 320px;
+    font-weight: 900;
+    color: rgba(212, 175, 55, 0.12);
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    line-height: 0.8;
+  }
+  .slide-4 h2 {
+    color: #F8F5F0;
+    font-size: 52px;
+    font-style: italic;
+    font-weight: 700;
+    max-width: 860px;
+    position: relative;
+    z-index: 2;
+  }
+  .slide-4 .attribution {
+    font-size: 18px;
+    font-weight: 600;
+    color: #D4AF37;
+    margin-top: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .slide-4 .regua { background: #D4AF37; }
+  .slide-4 .handle { color: rgba(255,255,255,0.35); }
+
+  /* ══════════════════════════════════
+     SLIDE 5 — NÚMERO (fundo escuro)
+     ══════════════════════════════════ */
+  .slide-5 {
+    background: #1C1C1C;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .slide-5 .big-number {
+    font-size: 220px;
+    font-weight: 800;
+    color: #D4AF37;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .slide-5 .big-number span {
+    font-size: 160px;
+  }
+  .slide-5 h2 { color: #F8F5F0; margin-bottom: 16px; font-size: 48px; }
+  .slide-5 p { color: #B2B2B2; max-width: 820px; }
+  .slide-5 .handle { color: #555; }
+
+  /* ══════════════════════════════════
+     SLIDE 6 — SOLO (fundo cream)
+     ══════════════════════════════════ */
+  .slide-6 {
+    background: #F5ECD7;
+    gap: 8px;
+  }
+  .slide-6 .eyebrow { color: #D4AF37; }
+  .slide-6 .regua { background: #D4AF37; }
+  .slide-6 h2 { color: #1A1A1A; margin-bottom: 8px; }
+  .slide-6 p { color: #444; max-width: 820px; }
+  .slide-6 .handle { color: #999; }
+
+  /* ══════════════════════════════════
+     SLIDE 7 — DUO (fundo escuro)
+     ══════════════════════════════════ */
+  .slide-7 {
+    background: #1C1C1C;
+    justify-content: center;
+    gap: 12px;
+  }
+  .slide-7 .eyebrow { color: #D4AF37; }
+  .slide-7 .regua { background: #D4AF37; }
+  .slide-7 h2 { color: #F8F5F0; font-size: 52px; margin-bottom: 8px; }
+  .slide-7 .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 16px;
+  }
+  .slide-7 .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .slide-7 .step-number {
+    font-size: 56px;
+    font-weight: 800;
+    color: #D4AF37;
+    line-height: 1;
+    min-width: 60px;
+  }
+  .slide-7 .step-text {
+    font-size: 24px;
+    font-weight: 500;
+    color: #B2B2B2;
+    line-height: 1.45;
+    padding-top: 8px;
+  }
+  .slide-7 .handle { color: #555; }
+
+  /* ══════════════════════════════════
+     SLIDE 8 — CTA FINAL (fundo escuro premium)
+     ══════════════════════════════════ */
+  .slide-8 {
+    background: #064420;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .slide-8 .logo-cta {
+    width: 100px;
+    height: auto;
+    margin-bottom: 40px;
+  }
+  .slide-8 .cta-eyebrow {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: #D4AF37;
+    margin-bottom: 20px;
+  }
+  .slide-8 h2 {
+    color: #F8F5F0;
+    font-size: 56px;
+    max-width: 860px;
+    margin-bottom: 12px;
+  }
+  .slide-8 .cta-sub {
+    font-size: 22px;
+    font-weight: 500;
+    color: #B2B2B2;
+    line-height: 1.55;
+    max-width: 780px;
+    margin-bottom: 40px;
+  }
+  .slide-8 .cta-items {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+  .slide-8 .cta-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .slide-8 .cta-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #D4AF37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #1C1C1C;
+    flex-shrink: 0;
+  }
+  .slide-8 .cta-item-text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #F8F5F0;
+  }
+  .slide-8 .cta-btn {
+    display: inline-block;
+    background: #D4AF37;
+    color: #1C1C1C;
+    font-size: 20px;
+    font-weight: 800;
+    padding: 22px 56px;
+    border-radius: 6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .slide-8 .cta-footer {
+    position: absolute;
+    bottom: 48px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+  }
+  .slide-8 .contact {
+    font-size: 16px;
+    font-weight: 600;
+    color: #B2B2B2;
+  }
+  .slide-8 .handle { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ── SLIDE 1 — CAPA ── -->
+<div class="slide slide-1">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="eyebrow">Google Meu Negócio</div>
+  <h1>A VITRINE<br>GRÁTIS QUE<br>VOCÊ ESTÁ<br>IGNORANDO</h1>
+  <div class="regua-capa"></div>
+  <p class="subtitle">E o que fazer hoje pra aparecer<br>quando o cliente pesquisa no Google</p>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 2 — NÚMERO ── -->
+<div class="slide slide-2">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="big-number">92<span>%</span></div>
+  <h2>das pessoas pesquisam no Google antes de comprar</h2>
+  <div class="regua" style="background:#D4AF37;"></div>
+  <p>Se o seu negócio não aparece nessa busca, você não existe pra esse cliente.</p>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 3 — SOLO ── -->
+<div class="slide slide-3">
+  <img class="logo logo-dark" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="eyebrow">O que é</div>
+  <h2>Uma ficha gratuita que coloca sua empresa no Google</h2>
+  <div class="regua"></div>
+  <p>Nome, endereço, telefone, fotos, avaliações. Tudo aparece direto no Google Maps e nos resultados de busca. Sem pagar nada.</p>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 4 — CITAÇÃO ── -->
+<div class="slide slide-4">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <span class="quote-mark">&ldquo;</span>
+  <h2>"Mas eu já tenho Instagram."</h2>
+  <div class="regua"></div>
+  <h2 style="font-style:normal; font-size:36px; font-weight:500; color:#B2B2B2; margin-top:8px; max-width:800px;">Instagram é vitrine pra quem já te segue. O Google é vitrine pra quem está procurando o que você vende agora.</h2>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 5 — NÚMERO ── -->
+<div class="slide slide-5">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="big-number">7<span>x</span></div>
+  <h2>mais cliques com perfil completo</h2>
+  <div class="regua" style="background:#D4AF37;"></div>
+  <p>Foto, horário de funcionamento, categoria certa e descrição bem escrita fazem diferença real. Perfil incompleto é perfil invisível.</p>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 6 — SOLO ── -->
+<div class="slide slide-6">
+  <img class="logo logo-dark" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="eyebrow">Avaliações</div>
+  <h2>A moeda mais valiosa do Google</h2>
+  <div class="regua"></div>
+  <p>Peça pro cliente avaliar depois de cada trabalho. Responda todas as avaliações, inclusive as negativas. O Google premia quem interage.</p>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 7 — DUO / PASSOS ── -->
+<div class="slide slide-7">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <div class="eyebrow">Ação prática</div>
+  <h2>3 coisas pra fazer hoje</h2>
+  <div class="regua"></div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-number">1</span>
+      <span class="step-text">Preencha 100% do perfil no Google Meu Negócio</span>
+    </div>
+    <div class="step">
+      <span class="step-number">2</span>
+      <span class="step-text">Suba pelo menos 5 fotos reais do seu trabalho</span>
+    </div>
+    <div class="step">
+      <span class="step-number">3</span>
+      <span class="step-text">Peça uma avaliação pro seu último cliente</span>
+    </div>
+  </div>
+  <span class="handle">@ednei.marinho</span>
+</div>
+
+<!-- ── SLIDE 8 — CTA FINAL ── -->
+<div class="slide slide-8">
+  <img class="logo" src="../../../identidade/logo-transparent.png" alt="AP">
+  <img class="logo-cta" src="../../../identidade/logo-transparent.png" alt="Atitude e Progresso">
+  <div class="cta-eyebrow">Presença digital profissional</div>
+  <h2>Não quer fazer sozinho?</h2>
+  <p class="cta-sub">Eu configuro, otimizo e coloco seu negócio no Google, nas redes e com funil de vendas funcionando.</p>
+  <div class="cta-items">
+    <div class="cta-item">
+      <span class="cta-check">&#10003;</span>
+      <span class="cta-item-text">Google Meu Negócio configurado</span>
+    </div>
+    <div class="cta-item">
+      <span class="cta-check">&#10003;</span>
+      <span class="cta-item-text">Presença digital completa</span>
+    </div>
+    <div class="cta-item">
+      <span class="cta-check">&#10003;</span>
+      <span class="cta-item-text">Funil de vendas pronto pra rodar</span>
+    </div>
+  </div>
+  <div class="cta-btn">QUERO SABER MAIS</div>
+  <div class="cta-footer">
+    <span class="contact">@ednei.marinho</span>
+    <span class="contact">atitudeeprogresso.com.br</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escopo de Entrega — Presença Digital Profissional</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+    :root {
+      --verde:   #064420;
+      --dourado: #D4AF37;
+      --preto:   #0d1a12;
+      --cinza:   #6b7c72;
+      --borda:   #dde5e0;
+      --fundo:   #f7f9f8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 10pt;
+      color: #1a2a1f;
+      background: white;
+      line-height: 1.65;
+    }
+
+    /* ── CAPA ── */
+    .capa {
+      background: var(--preto);
+      color: white;
+      padding: 52px 56px 44px;
+      page-break-after: always;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .capa-logo {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--dourado);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .capa-centro {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 0 40px;
+    }
+
+    .capa-tag {
+      display: inline-block;
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--dourado);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+
+    .capa h1 {
+      font-size: 30pt;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .capa h1 span { color: var(--dourado); }
+
+    .capa-sub {
+      font-size: 11pt;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .capa-pacotes {
+      display: flex;
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .capa-pacote {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+
+    .capa-pacote.destaque {
+      border-color: rgba(212,175,55,0.45);
+      background: rgba(212,175,55,0.05);
+    }
+
+    .capa-pacote-nome {
+      font-size: 8pt;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .capa-pacote.destaque .capa-pacote-nome { color: var(--dourado); }
+
+    .capa-pacote-preco {
+      font-size: 22pt;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.03em;
+    }
+
+    .capa-pacote-detalhe {
+      font-size: 8pt;
+      color: rgba(255,255,255,0.35);
+      margin-top: 3px;
+    }
+
+    .capa-rodape {
+      font-size: 8pt;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 20px;
+    }
+
+    /* ── CONTEÚDO ── */
+    .pagina {
+      padding: 44px 56px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* aviso interno */
+    .aviso-interno {
+      background: #fefce8;
+      border-left: 3px solid var(--dourado);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      font-size: 8.5pt;
+      color: #6b5a00;
+      margin-bottom: 32px;
+    }
+
+    /* seção */
+    .secao {
+      margin-bottom: 36px;
+      page-break-inside: avoid;
+    }
+
+    .secao-titulo {
+      font-size: 7pt;
+      font-weight: 700;
+      color: var(--dourado);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    /* pré-requisitos */
+    .prereq-lista {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .prereq-lista li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 9pt;
+      font-weight: 400;
+      color: #2a3a2f;
+    }
+
+    .prereq-lista li::before {
+      content: '→';
+      color: var(--cinza);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .prereq-nota {
+      margin-top: 10px;
+      font-size: 8pt;
+      color: var(--cinza);
+      font-style: italic;
+    }
+
+    /* pacote header */
+    .pacote-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--preto);
+      color: white;
+      border-radius: 10px 10px 0 0;
+      padding: 18px 22px;
+      margin-bottom: 0;
+    }
+
+    .pacote-header.dourado-bg {
+      background: linear-gradient(135deg, #1a3a22, #0d2016);
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+
+    .pacote-header-nome {
+      font-size: 13pt;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    .pacote-header-preco {
+      font-size: 18pt;
+      font-weight: 900;
+      color: var(--dourado);
+      letter-spacing: -0.03em;
+    }
+
+    .pacote-body {
+      border: 1px solid var(--borda);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+
+    /* item de entrega */
+    .item-entrega {
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+
+    .item-entrega:last-child { margin-bottom: 0; }
+
+    .item-num {
+      font-size: 7pt;
+      font-weight: 700;
+      color: var(--dourado);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .item-nome {
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--preto);
+      margin-bottom: 8px;
+    }
+
+    .sub-bloco {
+      margin-bottom: 6px;
+    }
+
+    .sub-label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .sub-label.entra { color: #166534; }
+    .sub-label.nao-entra { color: #991b1b; }
+    .sub-label.req { color: #92400e; }
+
+    .sub-lista {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .sub-lista li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 8.5pt;
+      color: #2a3a2f;
+      font-weight: 300;
+    }
+
+    .sub-lista.entra li::before { content: '✓'; color: #16a34a; flex-shrink: 0; font-weight: 700; }
+    .sub-lista.nao-entra li::before { content: '✕'; color: #dc2626; flex-shrink: 0; font-weight: 700; }
+    .sub-lista.req li::before { content: '!'; color: #d97706; flex-shrink: 0; font-weight: 900; }
+
+    .item-sep {
+      border: none;
+      border-top: 1px solid var(--borda);
+      margin: 16px 0;
+    }
+
+    /* tabela de prazo */
+    .prazo-tabela {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 8.5pt;
+    }
+
+    .prazo-tabela th {
+      text-align: left;
+      font-weight: 700;
+      font-size: 7.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cinza);
+      padding: 6px 10px;
+      border-bottom: 2px solid var(--borda);
+    }
+
+    .prazo-tabela td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--borda);
+      color: #2a3a2f;
+      font-weight: 300;
+    }
+
+    .prazo-tabela tr.total td {
+      font-weight: 700;
+      color: var(--preto);
+      border-top: 2px solid var(--borda);
+      border-bottom: none;
+      background: var(--fundo);
+    }
+
+    .prazo-tabela td:last-child { text-align: right; font-weight: 500; }
+    .prazo-tabela tr.total td:last-child { color: var(--verde); }
+
+    /* addon */
+    .addon-bloco {
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 10px;
+      padding: 18px 22px;
+      background: #fefdf5;
+      margin-bottom: 24px;
+      page-break-inside: avoid;
+    }
+
+    .addon-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .addon-tag {
+      font-size: 7pt;
+      font-weight: 700;
+      color: var(--dourado);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .addon-preco {
+      font-size: 14pt;
+      font-weight: 900;
+      color: var(--dourado);
+      letter-spacing: -0.02em;
+    }
+
+    .addon-nome {
+      font-size: 10pt;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* nunca entra */
+    .nunca-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .nunca-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 8.5pt;
+      color: #2a3a2f;
+      font-weight: 300;
+    }
+
+    .nunca-item::before {
+      content: '✕';
+      color: #dc2626;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* pagamento */
+    .pgto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .pgto-card {
+      border: 1px solid var(--borda);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .pgto-pct {
+      font-size: 20pt;
+      font-weight: 900;
+      color: var(--verde);
+      letter-spacing: -0.03em;
+    }
+
+    .pgto-label {
+      font-size: 8.5pt;
+      color: var(--cinza);
+      margin-top: 4px;
+      font-weight: 300;
+    }
+
+    .pgto-nota {
+      margin-top: 10px;
+      font-size: 8pt;
+      color: var(--cinza);
+      font-style: italic;
+    }
+
+    /* rodapé */
+    .rodape {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--borda);
+      font-size: 7.5pt;
+      color: var(--cinza);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { font-size: 9.5pt; }
+
+      .capa {
+        min-height: unset;
+        height: 100vh;
+      }
+
+      .pagina { padding: 32px 44px; }
+
+      .secao { page-break-inside: avoid; }
+
+      .pacote-header, .pacote-body,
+      .item-entrega, .addon-bloco { page-break-inside: avoid; }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      @page :first { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ CAPA ══════════════════════════════════════════════════════════════ -->
+<div class="capa">
+  <div class="capa-logo">Atitude e Progresso · Ednei Marinho</div>
+
+  <div class="capa-centro">
+    <div class="capa-tag">Documento interno</div>
+    <h1>Escopo de Entrega<br><span>Presença Digital</span><br>Profissional</h1>
+    <p class="capa-sub">Referência interna de o que entra, o que não entra, prazos e condições de pagamento para os dois pacotes de Presença Digital.</p>
+
+    <div class="capa-pacotes">
+      <div class="capa-pacote">
+        <div class="capa-pacote-nome">Pacote Simples</div>
+        <div class="capa-pacote-preco">R$ 1.500</div>
+        <div class="capa-pacote-detalhe">GMB + Landing page + WhatsApp + Domínio</div>
+      </div>
+      <div class="capa-pacote destaque">
+        <div class="capa-pacote-nome">Pacote Completo</div>
+        <div class="capa-pacote-preco">R$ 2.800</div>
+        <div class="capa-pacote-detalhe">Simples + IA + ManyChat + SEO + Criativos + QR Code</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="capa-rodape">Atitude e Progresso · atitudeeprogresso.com · Uso interno</div>
+</div>
+
+<!-- ══ CONTEÚDO ══════════════════════════════════════════════════════════ -->
+<div class="pagina">
+
+  <div class="aviso-interno">
+    Documento de uso interno. Usar antes de fechar qualquer cliente para alinhar expectativa, evitar retrabalho e garantir clareza sobre o escopo acordado.
+  </div>
+
+  <!-- PRÉ-REQUISITOS -->
+  <div class="secao">
+    <div class="secao-titulo">O que o cliente precisa fornecer antes do início</div>
+    <ul class="prereq-lista">
+      <li>Nome legal ou nome comercial do negócio</li>
+      <li>Endereço físico completo (se tiver ponto fixo)</li>
+      <li>Número de WhatsApp de atendimento</li>
+      <li>Horário de funcionamento</li>
+      <li>Fotos do negócio, local ou produto (mínimo 5, qualidade razoável de celular)</li>
+      <li>Logo em PNG ou JPG — se não tiver, avisar que criação de logo não está inclusa</li>
+      <li>Acesso ao e-mail vinculado ao Google (para configurar o GMB)</li>
+      <li>Descrição livre do negócio: o que faz, pra quem, o que diferencia</li>
+    </ul>
+    <p class="prereq-nota">Não iniciar o trabalho sem o material acima confirmado. Se o cliente não tiver fotos, orientar a tirar com o celular antes do início.</p>
+  </div>
+
+  <!-- PACOTE SIMPLES -->
+  <div class="secao">
+    <div class="secao-titulo">Pacote Simples</div>
+
+    <div class="pacote-header">
+      <div class="pacote-header-nome">Pacote Simples</div>
+      <div class="pacote-header-preco">R$ 1.500</div>
+    </div>
+
+    <div class="pacote-body">
+
+      <!-- Item 1 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 01</div>
+        <div class="item-nome">Google Meu Negócio completo e otimizado</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Criação ou reivindicação do perfil existente</li>
+            <li>Preenchimento completo: nome, categoria, endereço, telefone, horário, site, descrição</li>
+            <li>Upload das fotos fornecidas pelo cliente (capa + até 10 fotos)</li>
+            <li>Configuração das perguntas frequentes no perfil</li>
+            <li>Orientação para o processo de verificação</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Criação de logo ou tratamento de imagens</li>
+            <li>Gestão contínua de respostas a avaliações</li>
+            <li>Campanhas pagas no Google</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label req">Atenção</div>
+          <ul class="sub-lista req">
+            <li>O prazo de verificação depende do Google — não é garantia de data</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 2 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 02</div>
+        <div class="item-nome">Landing page profissional mobile-first</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Uma página única com: Hero, Sobre o negócio, Serviços (até 6 itens), Contato e Rodapé</li>
+            <li>Design responsivo (mobile e desktop)</li>
+            <li>Paleta de cores baseada na identidade do cliente</li>
+            <li>Até 2 rodadas de revisão após entrega da primeira versão</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>E-commerce ou carrinho de compras</li>
+            <li>Blog ou área de conteúdo dinâmico</li>
+            <li>Mais de uma página</li>
+            <li>Animações complexas ou integrações com sistemas externos</li>
+            <li>Copywriting profissional além do briefing — textos baseados nas informações do cliente</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 3 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 03</div>
+        <div class="item-nome">Botão de WhatsApp integrado</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Botão flutuante visível em todas as telas da página</li>
+            <li>Mensagem pré-preenchida configurada (ex: "Olá, vim pelo site e quero mais informações")</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 4 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 04</div>
+        <div class="item-nome">Domínio e hospedagem configurados</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Orientação na compra do domínio</li>
+            <li>Configuração de hospedagem e publicação da página</li>
+            <li>Configuração de SSL (https)</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Custo do domínio e hospedagem — fica por conta do cliente (estimativa: R$ 50–150/ano)</li>
+            <li>Migração de site existente</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 5 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 05</div>
+        <div class="item-nome">Suporte pós-entrega — 7 dias</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Correção de bugs ou erros encontrados após entrega</li>
+            <li>Ajustes pontuais de texto ou imagem</li>
+            <li>Atendimento por WhatsApp em até 24h úteis</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Adição de novas seções ou funcionalidades</li>
+            <li>Criação de novos materiais</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Prazo Simples -->
+      <div class="item-entrega">
+        <div class="item-num">Prazo estimado</div>
+        <table class="prazo-tabela">
+          <thead>
+            <tr><th>Etapa</th><th>Dias úteis</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Briefing e coleta de material</td><td>Até 2 (depende do cliente)</td></tr>
+            <tr><td>Desenvolvimento da página</td><td>3–5</td></tr>
+            <tr><td>Revisões (até 2 rodadas)</td><td>2–3 por rodada</td></tr>
+            <tr><td>Configuração de domínio e publicação</td><td>1–2</td></tr>
+            <tr class="total"><td>Total estimado</td><td>10–15 dias úteis</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PACOTE COMPLETO -->
+  <div class="secao">
+    <div class="secao-titulo">Pacote Completo</div>
+
+    <div class="pacote-header dourado-bg">
+      <div class="pacote-header-nome">Pacote Completo</div>
+      <div class="pacote-header-preco">R$ 2.800</div>
+    </div>
+
+    <div class="pacote-body">
+
+      <p style="font-size:8.5pt;color:var(--cinza);margin-bottom:16px;font-style:italic">
+        Inclui tudo do Pacote Simples (itens 01 a 05) mais os itens abaixo.
+      </p>
+
+      <!-- Item 6 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 06</div>
+        <div class="item-nome">Agente de IA integrado na landing page</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Chat de IA configurado e integrado à página</li>
+            <li>Treinado com informações do negócio (serviços, preços, horário, localização, FAQ)</li>
+            <li>Respostas automáticas 24h para as perguntas mais comuns</li>
+            <li>Fallback para WhatsApp quando o cliente quiser falar com humano</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Integração com CRM ou sistemas de gestão</li>
+            <li>Treinamento com base de conhecimento extensa (mais de 20 páginas)</li>
+            <li>Monitoramento ou atualização contínua após entrega</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 7 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 07</div>
+        <div class="item-nome">ManyChat no Instagram — automação de DM</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Criação ou acesso à conta ManyChat conectada ao Instagram do cliente</li>
+            <li>Configuração de 1 fluxo de automação de DM</li>
+            <li>Teste e validação do fluxo antes da entrega</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Criação de múltiplos fluxos</li>
+            <li>Gestão contínua das automações</li>
+            <li>Produção de conteúdo para Instagram</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label req">Requisito do cliente</div>
+          <ul class="sub-lista req">
+            <li>Conta no Instagram ativa e acesso concedido ao ManyChat</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 8 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 08</div>
+        <div class="item-nome">SEO local</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Pesquisa de 3–5 palavras-chave locais relevantes</li>
+            <li>Implementação nas meta tags da página (title, description, keywords)</li>
+            <li>Otimização dos textos da página com as palavras-chave</li>
+            <li>Dados estruturados básicos (schema local business)</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>SEO contínuo ou relatório mensal</li>
+            <li>Link building</li>
+            <li>SEO para múltiplas páginas</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 9 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 09</div>
+        <div class="item-nome">5 criativos prontos para Instagram</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>5 artes no formato quadrado (1080×1080px) em PNG</li>
+            <li>Baseadas na identidade visual do cliente (cores, logo, tipografia)</li>
+            <li>Temas sugeridos e aprovados antes da produção</li>
+            <li>1 rodada de revisão por criativo</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Stories, Reels ou formatos em vídeo</li>
+            <li>Copywriting de legenda para os posts</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 10 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 10</div>
+        <div class="item-nome">QR code personalizado</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>QR code com a URL do site do cliente</li>
+            <li>Versão colorida com a identidade do cliente</li>
+            <li>PNG de alta resolução pronto para impressão</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Item 11 -->
+      <div class="item-entrega">
+        <div class="item-num">Item 11</div>
+        <div class="item-nome">Suporte pós-entrega — 30 dias por WhatsApp</div>
+        <div class="sub-bloco">
+          <div class="sub-label entra">O que entra</div>
+          <ul class="sub-lista entra">
+            <li>Correção de bugs ou erros encontrados após entrega</li>
+            <li>Ajustes pontuais de texto, imagem ou configuração do ManyChat</li>
+            <li>Dúvidas de uso do agente de IA ou ManyChat</li>
+            <li>Atendimento por WhatsApp em até 24h úteis</li>
+          </ul>
+        </div>
+        <div class="sub-bloco">
+          <div class="sub-label nao-entra">O que não entra</div>
+          <ul class="sub-lista nao-entra">
+            <li>Adição de novas funcionalidades</li>
+            <li>Criação de novos materiais ou criativos adicionais</li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="item-sep" />
+
+      <!-- Prazo Completo -->
+      <div class="item-entrega">
+        <div class="item-num">Prazo estimado</div>
+        <table class="prazo-tabela">
+          <thead>
+            <tr><th>Etapa</th><th>Dias úteis</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Briefing e coleta de material</td><td>Até 2 (depende do cliente)</td></tr>
+            <tr><td>Desenvolvimento da página + GMB + SEO</td><td>4–7</td></tr>
+            <tr><td>Agente de IA</td><td>2–3</td></tr>
+            <tr><td>ManyChat</td><td>1–2</td></tr>
+            <tr><td>Criativos (5 artes)</td><td>3–5</td></tr>
+            <tr><td>Revisões e ajustes finais</td><td>2–3</td></tr>
+            <tr><td>Publicação e testes</td><td>1–2</td></tr>
+            <tr class="total"><td>Total estimado</td><td>18–25 dias úteis</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADD-ON -->
+  <div class="secao">
+    <div class="secao-titulo">Add-on disponível</div>
+    <div class="addon-bloco">
+      <div class="addon-header">
+        <span class="addon-tag">Opcional · qualquer pacote</span>
+        <span class="addon-preco">+ R$ 800</span>
+      </div>
+      <div class="addon-nome">Treinamento de IA no computador do cliente</div>
+      <div class="sub-bloco">
+        <div class="sub-label entra">O que entra</div>
+        <ul class="sub-lista entra">
+          <li>Instalação e configuração de ferramenta de IA no computador do cliente</li>
+          <li>Configuração personalizada com dados do negócio</li>
+          <li>1 sessão de treinamento ao vivo (1h via videochamada)</li>
+          <li>Material de referência para uso posterior (PDF ou página de consulta)</li>
+        </ul>
+      </div>
+      <div class="sub-bloco" style="margin-top:8px">
+        <div class="sub-label nao-entra">O que não entra</div>
+        <ul class="sub-lista nao-entra">
+          <li>Suporte técnico contínuo</li>
+          <li>Sessões adicionais de treinamento</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NUNCA ENTRA -->
+  <div class="secao">
+    <div class="secao-titulo">O que nunca entra em nenhum pacote</div>
+    <div class="nunca-grid">
+      <div class="nunca-item">Criação de logo do zero</div>
+      <div class="nunca-item">Produção de vídeo</div>
+      <div class="nunca-item">Gestão de redes sociais (postagem contínua)</div>
+      <div class="nunca-item">Campanhas de tráfego pago (Google Ads, Meta Ads)</div>
+      <div class="nunca-item">E-mail marketing</div>
+      <div class="nunca-item">Integração com sistemas de pagamento ou e-commerce</div>
+    </div>
+    <p style="font-size:8pt;color:var(--cinza);margin-top:12px;font-style:italic">
+      Se o cliente pedir algo fora desse escopo, cotar separadamente ou recusar com clareza.
+    </p>
+  </div>
+
+  <!-- PAGAMENTO -->
+  <div class="secao">
+    <div class="secao-titulo">Forma de pagamento</div>
+    <div class="pgto-grid">
+      <div class="pgto-card">
+        <div class="pgto-pct">50%</div>
+        <div class="pgto-label">Na assinatura<br>antes de começar</div>
+      </div>
+      <div class="pgto-card">
+        <div class="pgto-pct">50%</div>
+        <div class="pgto-label">Na entrega da<br>primeira versão para revisão</div>
+      </div>
+    </div>
+    <p class="pgto-nota">Não iniciar trabalho sem entrada confirmada.</p>
+  </div>
+
+  <div class="rodape">
+    <span>Atitude e Progresso · Ednei Marinho</span>
+    <span>Documento interno · Uso operacional</span>
+  </div>
+
+</div>
+</body>
+</html>

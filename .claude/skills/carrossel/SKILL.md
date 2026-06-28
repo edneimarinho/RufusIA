@@ -59,7 +59,7 @@ O RufusIA tem um estilo próprio — editorial, calmo, premium. Sem clip-art, se
 - **H2 (slides internos):** 60-72px, weight 800, line-height 1.04, letter-spacing **-0.035em**
 - **Corpo:** 20-24px, weight 500, line-height 1.5
 - **Eyebrow/kicker:** 13-16px, weight 700-800, **UPPERCASE**, letter-spacing **0.22-0.32em**, cor de destaque
-- **Page counter (canto sup. dir.):** 14-16px, weight 500-600, letter-spacing 0.18em, cor muted
+- **Page counter:** NÃO USAR. O usuário não quer contador de slides (01/08, 02/08 etc.) em nenhum carrossel
 - **Meta/handle (@):** 15-18px, weight 600
 
 Regra do tipo: títulos grandes com kerning **apertado** (-0.035em), eyebrows pequenos com kerning **aberto** (0.22em+). Esse contraste é o coração do estilo.
@@ -77,7 +77,7 @@ Paleta sóbria: fundo dark + off-white + **UMA** cor de destaque. Nunca quatro c
 ### Elementos visuais recorrentes
 
 - **Régua fina** (3-4px de altura, 60-80px de largura, cor de destaque) entre kicker e h2 ou como divisor
-- **Logo top-left + page counter top-right** em todos os slides
+- **Logo top-left** em todos os slides (sem page counter)
 - **Border-top 1px** `rgba(255,255,255,0.12)` separando rodapé do conteúdo (em slides escuros)
 - **Stamps circulares** (200x200, border 3px translúcida, rotate -10deg) pra selos/datas/dados
 - **Tags/pills** uppercase, padding generoso, kerning 0.2em, pra rotular categoria do slide
@@ -129,7 +129,7 @@ Ao terminar de renderizar os PNGs, gerar **automaticamente** a legenda do post e
 2. Contexto (1-2 frases sobre o conteúdo)
 3. CTA pra arrastar ("Arraste pro lado e confere")
 4. Bloco de oferta (diferenciais da empresa, contato)
-5. Hashtags (10-15 — público + nicho + local se aplicável)
+5. Hashtags (máximo 5 — as mais relevantes pro post)
 
 ---
 
@@ -189,7 +189,7 @@ Se não tiver o script ainda, instruir o usuário a configurar `OPENAI_API_KEY` 
 1. Criar **um único `carrossel.html`** com TODOS os slides como `<div class="slide">` dentro do mesmo arquivo. Inline CSS, Google Fonts como única dependência externa. Aplicar:
    - Cores e tipografia de `identidade/design-guide.md`
    - Mínimo 2 layouts diferentes (não repetir o mesmo em todos os slides)
-   - Logo top-left + slide-counter top-right em todos os slides
+   - Logo top-left em todos os slides (sem slide-counter)
    - Slide final: logo + CTA, fundo na cor principal
 
    **Pra incluir foto IA no HTML:**

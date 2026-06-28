@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Script de Prospecção — Presença Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+    :root {
+      --verde:   #064420;
+      --dourado: #D4AF37;
+      --preto:   #0d1a12;
+      --cinza:   #6b7c72;
+      --borda:   #dde5e0;
+      --fundo:   #f7f9f8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 9.5pt;
+      color: #1a2a1f;
+      background: white;
+      line-height: 1.65;
+    }
+
+    /* ── CAPA ── */
+    .capa {
+      background: var(--preto);
+      color: white;
+      padding: 52px 56px 44px;
+      page-break-after: always;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .capa-logo { font-size: 11pt; font-weight: 700; color: var(--dourado); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .capa-centro { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 60px 0 40px; }
+
+    .capa-tag {
+      display: inline-block;
+      font-size: 8pt; font-weight: 600; color: var(--dourado);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border: 1px solid rgba(212,175,55,0.4); border-radius: 20px;
+      padding: 4px 14px; margin-bottom: 24px; width: fit-content;
+    }
+
+    .capa h1 {
+      font-size: 30pt; font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.03em; color: white; margin-bottom: 16px;
+    }
+    .capa h1 span { color: var(--dourado); }
+
+    .capa-sub { font-size: 11pt; color: rgba(255,255,255,0.55); font-weight: 300; max-width: 500px; line-height: 1.7; }
+
+    /* fluxo visual na capa */
+    .fluxo-capa {
+      display: flex;
+      gap: 0;
+      margin-top: 48px;
+    }
+
+    .fluxo-fase {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 16px;
+      border-right: none;
+    }
+
+    .fluxo-fase:first-child { border-radius: 8px 0 0 8px; }
+    .fluxo-fase:last-child { border-right: 1px solid rgba(255,255,255,0.08); border-radius: 0 8px 8px 0; }
+
+    .fluxo-num {
+      font-size: 7pt; font-weight: 700; color: var(--dourado);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 4px;
+    }
+
+    .fluxo-nome { font-size: 8.5pt; font-weight: 700; color: white; }
+    .fluxo-desc { font-size: 7.5pt; color: rgba(255,255,255,0.4); margin-top: 3px; font-weight: 300; }
+
+    .capa-rodape { font-size: 8pt; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px; }
+
+    /* ── CONTEÚDO ── */
+    .pagina { padding: 44px 56px; max-width: 860px; margin: 0 auto; }
+
+    .aviso-interno {
+      background: #fefce8; border-left: 3px solid var(--dourado);
+      border-radius: 0 6px 6px 0; padding: 12px 16px;
+      font-size: 8.5pt; color: #6b5a00; margin-bottom: 32px;
+    }
+
+    /* canais */
+    .canais-tabela {
+      width: 100%; border-collapse: collapse;
+      font-size: 8.5pt; margin-bottom: 28px;
+    }
+
+    .canais-tabela th {
+      text-align: left; font-size: 7.5pt; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--cinza);
+      padding: 6px 10px; border-bottom: 2px solid var(--borda);
+    }
+
+    .canais-tabela td {
+      padding: 8px 10px; border-bottom: 1px solid var(--borda);
+      vertical-align: top; font-weight: 300;
+    }
+
+    .canais-tabela td:first-child { font-weight: 600; color: var(--verde); }
+
+    /* seção / fase */
+    .fase {
+      margin-bottom: 32px;
+      page-break-inside: avoid;
+    }
+
+    .fase-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .fase-num {
+      background: var(--verde); color: var(--dourado);
+      font-size: 7.5pt; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border-radius: 4px; padding: 3px 9px;
+      white-space: nowrap;
+    }
+
+    .fase-titulo { font-size: 12pt; font-weight: 900; letter-spacing: -0.01em; }
+
+    /* mensagem */
+    .mensagem { margin-bottom: 18px; page-break-inside: avoid; }
+
+    .msg-label {
+      font-size: 7pt; font-weight: 700; color: var(--cinza);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .msg-balao {
+      background: var(--fundo);
+      border: 1px solid var(--borda);
+      border-left: 3px solid var(--dourado);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 9pt;
+      color: #1a2a1f;
+      line-height: 1.7;
+      white-space: pre-line;
+      font-style: italic;
+    }
+
+    .msg-nota {
+      margin-top: 7px;
+      font-size: 8pt;
+      color: var(--cinza);
+      font-weight: 300;
+      line-height: 1.6;
+      padding-left: 4px;
+    }
+
+    .msg-nota strong { color: #1a2a1f; font-weight: 600; }
+
+    /* variante */
+    .msg-balao.variante {
+      border-left-color: var(--verde);
+      background: rgba(6,68,32,0.04);
+    }
+
+    /* silêncio */
+    .silencio-box {
+      background: #1a2a1f;
+      color: white;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 9pt;
+      font-weight: 500;
+      text-align: center;
+      margin: 12px 0;
+      letter-spacing: 0.02em;
+    }
+
+    .silencio-box span { color: var(--dourado); }
+
+    /* regra de ouro */
+    .regra-ouro {
+      background: linear-gradient(135deg, #1a3a22, #0d2016);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 8px;
+      padding: 16px 18px;
+      color: white;
+      font-size: 8.5pt;
+      margin-top: 12px;
+    }
+
+    .regra-ouro strong { color: var(--dourado); font-size: 9pt; display: block; margin-bottom: 6px; }
+
+    /* follow-up */
+    .followup-bloco {
+      background: var(--fundo);
+      border: 1px solid var(--borda);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+
+    .followup-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .followup-tag {
+      font-size: 7pt; font-weight: 700;
+      color: var(--cinza); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .followup-timing { font-size: 7.5pt; color: var(--cinza); font-weight: 300; }
+
+    /* objeções */
+    .objecao { margin-bottom: 14px; page-break-inside: avoid; }
+    .objecao-gatilho { font-size: 8pt; font-weight: 700; color: #7c2d12; margin-bottom: 6px; }
+
+    /* seção label */
+    .secao-label {
+      font-size: 7pt; font-weight: 700; color: var(--dourado);
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 12px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    /* rodapé */
+    .rodape {
+      margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--borda);
+      font-size: 7.5pt; color: var(--cinza);
+      display: flex; justify-content: space-between;
+    }
+
+    /* migração */
+    .migracao-box {
+      display: flex; gap: 14px; margin-bottom: 24px;
+    }
+
+    .mig-card {
+      flex: 1; border: 1px solid var(--borda); border-radius: 8px;
+      padding: 13px 15px;
+    }
+
+    .mig-card-titulo {
+      font-size: 7.5pt; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--cinza); margin-bottom: 6px;
+    }
+
+    .mig-card p { font-size: 8.5pt; font-weight: 300; color: #2a3a2f; line-height: 1.6; }
+
+    @media print {
+      .capa { min-height: unset; height: 100vh; }
+      .pagina { padding: 32px 44px; }
+      .fase, .mensagem, .followup-bloco { page-break-inside: avoid; }
+      @page { size: A4; margin: 0; }
+      @page :first { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ CAPA ══════════════════════════════════════════════════════════════ -->
+<div class="capa">
+  <div class="capa-logo">Atitude e Progresso · Ednei Marinho</div>
+
+  <div class="capa-centro">
+    <div class="capa-tag">Documento interno</div>
+    <h1>Script de<br><span>Prospecção</span><br>Presença Digital</h1>
+    <p class="capa-sub">Roteiro completo para primeiro contato com negócios locais — do diagnóstico ao fechamento. 5 fases + follow-up + objeções.</p>
+
+    <div class="fluxo-capa">
+      <div class="fluxo-fase">
+        <div class="fluxo-num">Fase 1</div>
+        <div class="fluxo-nome">Conexão</div>
+        <div class="fluxo-desc">Abertura + mapeamento da dor</div>
+      </div>
+      <div class="fluxo-fase">
+        <div class="fluxo-num">Fase 2</div>
+        <div class="fluxo-nome">D.I.</div>
+        <div class="fluxo-desc">Comprometer com resposta</div>
+      </div>
+      <div class="fluxo-fase">
+        <div class="fluxo-num">Fase 3</div>
+        <div class="fluxo-nome">Decisor</div>
+        <div class="fluxo-desc">Quem bate o martelo</div>
+      </div>
+      <div class="fluxo-fase">
+        <div class="fluxo-num">Fase 4</div>
+        <div class="fluxo-nome">Apresentação</div>
+        <div class="fluxo-desc">O serviço + análise grátis</div>
+      </div>
+      <div class="fluxo-fase">
+        <div class="fluxo-num">Fase 5</div>
+        <div class="fluxo-nome">Fechamento</div>
+        <div class="fluxo-desc">Ancoragem + silêncio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="capa-rodape">Atitude e Progresso · atitudeeprogresso.com · Uso interno</div>
+</div>
+
+<!-- ══ CONTEÚDO ══════════════════════════════════════════════════════════ -->
+<div class="pagina">
+
+  <div class="aviso-interno">
+    Documento de uso interno. Nunca mande mensagens sem personalizar com dados reais do negócio prospectado. Um dado real muda completamente a taxa de resposta.
+  </div>
+
+  <!-- CANAL -->
+  <div style="margin-bottom:28px">
+    <div class="secao-label">Como usar por canal</div>
+    <table class="canais-tabela">
+      <thead>
+        <tr>
+          <th>Canal</th>
+          <th>Fases</th>
+          <th>Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Instagram DM</td>
+          <td>Fases 1 e 2 (Conexão)</td>
+          <td>Abertura mais curta, personalizar pelo perfil. Migrar pro WhatsApp antes de apresentar</td>
+        </tr>
+        <tr>
+          <td>WhatsApp direto</td>
+          <td>Script completo</td>
+          <td>Quando você já tem o número do negócio</td>
+        </tr>
+        <tr>
+          <td>Canal + diagnóstico pronto</td>
+          <td>Pular Fase 1, ir direto pra Fase 2</td>
+          <td>Use a Mensagem 1B — entrega o dado antes de perguntar qualquer coisa</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="migracao-box">
+      <div class="mig-card">
+        <div class="mig-card-titulo">Migração Instagram → WhatsApp</div>
+        <p>Após o diagnóstico, antes de apresentar o serviço:</p>
+        <div class="msg-balao" style="margin-top:8px">Faz sentido continuar por aqui ou prefere WhatsApp? Fica mais fácil eu te mandar a análise.</div>
+      </div>
+      <div class="mig-card">
+        <div class="mig-card-titulo">Abertura simplificada no Instagram</div>
+        <p>Quando não tem diagnóstico ainda:</p>
+        <div class="msg-balao" style="margin-top:8px">Oi, [Nome]! Vi o post de [referência real]. Curioso — como os clientes novos chegam até vocês hoje?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 1 -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Fase 1</span>
+      <span class="fase-titulo">Conexão</span>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 1A — Abertura sem diagnóstico</div>
+      <div class="msg-balao">Oi, [Nome]! Vi que vocês têm [tipo de negócio] aqui em [cidade/bairro]. Curioso — como os clientes novos chegam até vocês hoje?</div>
+      <p class="msg-nota"><strong>Regra:</strong> Nunca mande sem personalizar. Um detalhe real (produto específico, localização, algo que apareceu no perfil deles) muda completamente a taxa de resposta. Se não tiver como personalizar, não mande.</p>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 1B — Abertura com diagnóstico pronto (mais forte)</div>
+      <div class="msg-balao">Oi, [Nome]! Pesquisei [tipo de negócio] aqui em [cidade] e encontrei o perfil de vocês. Vi que [dado real — ex: "vocês não aparecem nas primeiras posições" / "o perfil do Google está incompleto" / "o concorrente X aparece na frente com 80 avaliações"]. São cerca de [volume mensal] pessoas pesquisando por isso na região todo mês.
+
+Posso te mostrar o que encontrei?</div>
+      <p class="msg-nota"><strong>Por que essa abertura é mais forte:</strong> Você entrega valor antes da primeira resposta. Prova competência imediatamente e abre a conversa com um dado que interessa a eles. Após a resposta deles, pular direto para a Fase 2 — o diagnóstico já fez o trabalho da Fase 1.</p>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 2 — Após a resposta (indicação, Instagram, boca a boca...)</div>
+      <div class="msg-balao">Faz sentido. E no Google — quando alguém pesquisa [tipo de negócio] aqui em [cidade], vocês aparecem?</div>
+      <p class="msg-nota"><strong>Por que essa pergunta:</strong> A maioria não sabe. E não saber já é o problema.</p>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 3A — Se ele disser que aparece no Google</div>
+      <div class="msg-balao variante">Você sabe quantas pessoas chegam pelo Google por mês? Isso vira contato direto ou fica na visualização?</div>
+      <p class="msg-nota">Aparecer não é o mesmo que converter. A pergunta abre a brecha mesmo pra quem acha que está bem.</p>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 3B — Se ele disser que não aparece (ou não sabe)</div>
+      <div class="msg-balao variante">Entendi. Você tem ideia de quantas pessoas pesquisam por [tipo de negócio] aqui em [cidade] por mês?</div>
+      <div class="msg-balao variante" style="margin-top:6px">É mais do que parece. A maioria já tá pronta pra comprar — vai no primeiro que aparece.</div>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Mensagem 4 — Espelho + aprofundamento emocional</div>
+      <div class="msg-balao">Então pelo que você me contou, os clientes chegam hoje por [indicação / boca a boca / Instagram]. Funciona — mas depende de alguém lembrar de recomendar, ou de você estar postando todo dia.
+
+No Google é diferente: a pessoa pesquisa, aparece, entra em contato — sem precisar te conhecer antes.
+
+Já aconteceu de você perder um cliente pro concorrente só porque ele apareceu antes no Google?</div>
+      <div class="msg-balao variante" style="margin-top:6px">Como foi isso pra você?</div>
+      <p class="msg-nota"><strong>Por que essa pergunta:</strong> Faz a pessoa nomear a dor com as próprias palavras. O que ela disser aqui você usa no fechamento: <em>"Você me disse que se sentiu X — com a presença estruturada, isso não volta a acontecer."</em></p>
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Fase 2</span>
+      <span class="fase-titulo">D.I. — Combinado antes de apresentar</span>
+    </div>
+
+    <p style="font-size:8pt;color:var(--cinza);margin-bottom:14px;font-style:italic">Só depois que a dor foi confirmada — nunca antes.</p>
+
+    <div class="mensagem">
+      <div class="msg-balao">Antes de te explicar o que eu faço, quero fazer um combinado simples.
+
+Se depois que eu explicar você sentir que não faz sentido pra você agora, pode me dizer não tranquilamente, tudo bem? Prefiro isso do que você ficar com dúvida depois.</div>
+      <p class="msg-nota">→ Esperar o <strong>SIM</strong></p>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-balao">Por outro lado, se fizer sentido e encaixar no que você precisa, a gente já alinha os próximos passos hoje mesmo. Combinado?</div>
+      <p class="msg-nota">→ Esperar o <strong>SIM</strong></p>
+      <p class="msg-nota" style="margin-top:6px"><strong>Por que o D.I.:</strong> Elimina o "vou pensar" e o sumiço após a apresentação. A pessoa se compromete com uma resposta objetiva antes de ouvir qualquer coisa. Sem esse combinado, você faz a melhor apresentação do mundo e recebe silêncio.</p>
+    </div>
+  </div>
+
+  <!-- FASE 3 -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Fase 3</span>
+      <span class="fase-titulo">Quem decide</span>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-balao">Uma coisa antes de continuar: essa decisão de investir no negócio é sua ou você precisaria alinhar com alguém — sócio, esposa, gerente?</div>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Se precisar consultar alguém</div>
+      <div class="msg-balao variante">Faz sentido. Então antes de te explicar tudo, que tal a gente agendar uma conversa rápida com os dois presentes? Assim ninguém fica de fora da decisão e você não precisa repassar tudo depois. Quando seria melhor pra vocês?</div>
+      <p class="msg-nota"><strong>Por que:</strong> Não adianta fazer a melhor apresentação pra quem não pode dizer sim. Se tiver uma segunda pessoa que decide, ela precisa ouvir de você — não de repasse.</p>
+    </div>
+  </div>
+
+  <!-- FASE 4 -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Fase 4</span>
+      <span class="fase-titulo">Apresentação</span>
+    </div>
+
+    <p style="font-size:8pt;color:var(--cinza);margin-bottom:14px;font-style:italic">Só após os dois SIMs do D.I. e confirmação de quem decide.</p>
+
+    <div class="mensagem">
+      <div class="msg-balao">Trabalho com presença digital pra negócios locais. Na prática, isso significa três coisas:
+
+1. Google Meu Negócio configurado do jeito certo — seu negócio aparece quando alguém pesquisa na sua região
+2. Site simples e direto — que converte visita em contato, não só em visualização
+3. SEO local — as palavras certas pra sua área, pra você aparecer antes do concorrente
+
+Não é pacote genérico. Olho pra situação específica do seu negócio e monto o que faz sentido pra vocês.
+
+Posso te mostrar como tá a presença de vocês online agora? É gratuito e rápido — você vê na prática antes de qualquer decisão.</div>
+      <p class="msg-nota"><strong>Por que "análise gratuita":</strong> Não fecha venda no WhatsApp. Abre uma conversa real. O diagnóstico gratuito é onde você prova o valor antes de cobrar qualquer coisa.</p>
+    </div>
+  </div>
+
+  <!-- FASE 5 -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Fase 5</span>
+      <span class="fase-titulo">Fechamento</span>
+    </div>
+
+    <p style="font-size:8pt;color:var(--cinza);margin-bottom:14px;font-style:italic">Esta fase acontece na segunda conversa, após a análise gratuita — quando o prospect já viu o diagnóstico.</p>
+
+    <div class="mensagem">
+      <div class="msg-label">Retomar a dor que ele nomeou lá atrás</div>
+      <div class="msg-balao">Você me disse que [o que ele falou sobre perder cliente / não aparecer no Google]. Com o que vou te mostrar na análise, isso fica claro quanto tá custando não ter isso estruturado.</div>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Após mostrar o diagnóstico — ancoragem + preço</div>
+      <div class="msg-balao">Uma agência digital tradicional cobra entre R$1.500 e R$3.000 só pra estruturar isso — fora a mensalidade pra manter depois.
+
+O meu trabalho custa [seu valor]. Você acompanha cada etapa e sabe exatamente o que está sendo feito.</div>
+    </div>
+
+    <div class="silencio-box">
+      <span>SILÊNCIO</span> — não mande mais nada. Espera a reação deles.
+    </div>
+
+    <div class="regra-ouro">
+      <strong>Regra de ouro</strong>
+      Quem fala primeiro depois do preço, perde. Não preencha o silêncio com justificativas — isso soa como desespero. Manda o valor e fecha o WhatsApp.
+    </div>
+
+    <div class="mensagem" style="margin-top:16px">
+      <div class="msg-label">Se responderem positivamente</div>
+      <div class="msg-balao variante">Ótimo. Pra dar início, vou precisar de [próximo passo concreto — ex: "acesso à sua conta do Google ou criamos uma nova pra você"].</div>
+    </div>
+
+    <div class="mensagem">
+      <div class="msg-label">Se hesitarem ou pedirem desconto</div>
+      <div class="msg-balao variante">Faz sentido querer pensar. O que ficou em dúvida pra você?</div>
+      <p class="msg-nota">Ouvir. Não defender o preço. Entender a objeção real — que raramente é o preço.</p>
+    </div>
+  </div>
+
+  <!-- FOLLOW-UP -->
+  <div class="fase">
+    <div class="fase-header">
+      <span class="fase-num">Follow-up</span>
+      <span class="fase-titulo">Se não responder</span>
+    </div>
+
+    <div class="followup-bloco">
+      <div class="followup-header">
+        <span class="followup-tag">Follow-up 1</span>
+        <span class="followup-timing">2–3 dias após o primeiro contato</span>
+      </div>
+      <div class="msg-balao">[Nome], tudo bem? Fiz uma olhada rápida na presença de vocês online. Tem uma coisa específica que vale ver — posso te mandar?</div>
+      <p class="msg-nota" style="margin-top:8px">Se possível, faça o diagnóstico antes de mandar esse follow-up. Um dado real (ficha do Google incompleta, sem avaliações, concorrente direto aparecendo na frente) é mais poderoso do que qualquer argumento. Manda o dado, não o discurso.</p>
+    </div>
+
+    <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px 16px;font-size:8.5pt;color:#7f1d1d;">
+      <strong style="display:block;margin-bottom:4px">Máximo 3 follow-ups.</strong>
+      Se não responder na terceira tentativa, parar. Insistir além disso queima o contato e sua energia.
+    </div>
+  </div>
+
+  <div class="rodape">
+    <span>Atitude e Progresso · Ednei Marinho</span>
+    <span>Script v2 · Uso interno</span>
+  </div>
+
+</div>
+</body>
+</html>

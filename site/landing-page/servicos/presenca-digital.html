@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Presença Digital Profissional | Atitude e Progresso</title>
+  <meta name="description" content="Apareça no Google, tenha uma página profissional e um agente de IA atendendo seus clientes. Para serviços, negócios locais, e-commerce e infoprodutores." />
+  <link rel="icon" href="../logo-icon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:     #064420;
+      --verde-mid: #0a6130;
+      --preto:     #080e0b;
+      --dourado:   #D4AF37;
+      --dourado-2: #f0cc55;
+      --branco:    #F8F5F0;
+      --cinza:     #9aab9f;
+    }
+
+    html { scroll-behavior: smooth; background: var(--preto); }
+    body { font-family: 'Inter', sans-serif; background: var(--preto); color: var(--branco); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2.5rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,14,11,0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 900; font-size: 1.1rem; }
+    .nav-logo img { height: 36px; width: auto; }
+    .nav-logo span { color: var(--dourado); }
+    .nav-back { font-size: 0.8rem; color: var(--cinza); display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .nav-back:hover { color: var(--dourado); }
+
+    /* LAYOUT */
+    .section { max-width: 1000px; margin: 0 auto; padding: 5rem 2rem; }
+    .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dourado); margin-bottom: 0.75rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 7rem 2rem 4rem; text-align: center; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,68,32,0.5) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -55%); pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25);
+      color: var(--dourado); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 2rem;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--dourado), var(--dourado-2), var(--dourado));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { font-size: 1.05rem; color: var(--cinza); line-height: 1.75; font-weight: 300; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: linear-gradient(135deg, #1a7a35, #25a244);
+      color: #fff; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 800;
+      padding: 1rem 2.5rem; border-radius: 4px; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s; box-shadow: 0 0 30px rgba(37,162,68,0.2);
+    }
+    .btn-whatsapp:hover { opacity: 0.92; transform: translateY(-2px); }
+    .btn-whatsapp svg { width: 20px; height: 20px; }
+
+    /* DOR */
+    .dor-section { background: rgba(6,68,32,0.15); border-top: 1px solid rgba(212,175,55,0.07); border-bottom: 1px solid rgba(212,175,55,0.07); }
+    .dor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 3rem; }
+    .dor-card {
+      background: rgba(8,14,11,0.6); border: 1px solid rgba(212,175,55,0.08);
+      border-left: 3px solid rgba(212,175,55,0.3); border-radius: 6px; padding: 1.5rem;
+    }
+    .dor-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .dor-card p { font-size: 0.85rem; color: var(--cinza); font-weight: 300; line-height: 1.65; }
+    .dor-stat { font-size: 2rem; font-weight: 900; color: var(--dourado); letter-spacing: -0.03em; display: block; margin-bottom: 0.25rem; }
+
+    /* TRANSFORMAÇÃO */
+    .transformacao-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+    .transf-col { border-radius: 10px; padding: 2rem; }
+    .transf-col.antes { background: rgba(100,20,20,0.15); border: 1px solid rgba(255,80,80,0.12); }
+    .transf-col.depois { background: rgba(6,68,32,0.25); border: 1px solid rgba(212,175,55,0.2); }
+    .transf-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+    .transf-col.antes .transf-label { color: rgba(255,120,120,0.8); }
+    .transf-col.depois .transf-label { color: var(--dourado); }
+    .transf-item { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.875rem; line-height: 1.55; font-weight: 300; padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .transf-item:last-child { border-bottom: none; }
+    .transf-col.antes .transf-item { color: rgba(248,245,240,0.65); }
+    .transf-col.depois .transf-item { color: rgba(248,245,240,0.9); }
+    .transf-icon { flex-shrink: 0; font-size: 0.85rem; margin-top: 2px; }
+
+    /* ENTREGÁVEIS */
+    .entregaveis-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 0; }
+    .entregavel-card {
+      background: rgba(6,68,32,0.2); border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 10px; padding: 1.75rem;
+    }
+    .entregavel-core {
+      border-color: rgba(212,175,55,0.25);
+      border-top: 2px solid rgba(212,175,55,0.5);
+    }
+    .entregavel-titulo { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--branco); }
+    .entregavel-card p { font-size: 0.85rem; color: var(--cinza); line-height: 1.65; font-weight: 300; }
+    .entregavel-extra {
+      background: rgba(8,14,11,0.5); border: 1px solid rgba(212,175,55,0.06);
+      border-radius: 8px; padding: 1.25rem;
+    }
+    .entregavel-extra-titulo { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.4rem; color: rgba(248,245,240,0.75); }
+    .entregavel-extra p { font-size: 0.8rem; color: var(--cinza); line-height: 1.6; font-weight: 300; }
+
+    /* SERVIÇOS */
+    .servicos-lista { list-style: none; margin-top: 3rem; }
+    .servico-linha {
+      display: flex; align-items: baseline; gap: 2rem;
+      padding: 1.1rem 0; border-bottom: 1px solid rgba(212,175,55,0.08);
+    }
+    .servico-linha:first-child { border-top: 1px solid rgba(212,175,55,0.08); }
+    .servico-titulo { font-size: 0.95rem; font-weight: 700; min-width: 220px; flex-shrink: 0; color: var(--branco); }
+    .servico-desc { font-size: 0.875rem; color: var(--cinza); font-weight: 300; line-height: 1.55; }
+
+
+    /* FAQ */
+    .faq-lista { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .faq-item { background: rgba(6,68,32,0.2); border: 1px solid rgba(212,175,55,0.08); border-radius: 8px; padding: 1.5rem; }
+    .faq-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .faq-item p { font-size: 0.875rem; color: var(--cinza); line-height: 1.7; font-weight: 300; }
+
+    /* CTA FINAL */
+    .cta-final { text-align: center; padding: 6rem 2rem; background: rgba(6,68,32,0.15); border-top: 1px solid rgba(212,175,55,0.07); }
+    .cta-final h2 { font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .cta-final p { color: var(--cinza); font-size: 0.95rem; font-weight: 300; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+
+    /* FOOTER */
+    footer { padding: 2rem; text-align: center; font-size: 0.78rem; color: rgba(154,171,159,0.5); border-top: 1px solid rgba(255,255,255,0.04); }
+    footer a { color: rgba(212,175,55,0.7); }
+    footer a:hover { color: var(--dourado); }
+
+    /* CANVAS */
+    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; width: 100%; height: 100%; }
+    nav, section, footer { position: relative; z-index: 1; }
+
+    /* PROCESSO */
+    .processo-lista { margin-top: 3rem; display: flex; flex-direction: column; position: relative; }
+    .processo-lista::before {
+      content: ''; position: absolute; left: 27px; top: 28px; bottom: 28px; width: 1px;
+      background: linear-gradient(to bottom, rgba(212,175,55,0.35), rgba(212,175,55,0.05));
+    }
+    .processo-item { display: flex; gap: 1.5rem; align-items: flex-start; padding: 1.25rem 0; }
+    .processo-num {
+      flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(6,68,32,0.5); border: 1px solid rgba(212,175,55,0.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 800; color: var(--dourado); letter-spacing: 0.05em;
+      position: relative; z-index: 1;
+    }
+    .processo-content { padding-top: 0.9rem; }
+    .processo-content h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--branco); }
+    .processo-content p { font-size: 0.875rem; color: var(--cinza); line-height: 1.7; font-weight: 300; }
+
+    /* FLOATING WHATSAPP */
+    .whatsapp-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a7a35, #25a244);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,162,68,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(37,162,68,0.6); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .section { padding: 3.5rem 1.25rem; }
+      .servico-linha { flex-direction: column; gap: 0.35rem; }
+      .servico-titulo { min-width: unset; }
+      .dor-grid { grid-template-columns: 1fr; }
+      .entregaveis-grid { grid-template-columns: 1fr; }
+      .transformacao-grid { grid-template-columns: 1fr; }
+      .processo-lista::before { left: 22px; }
+      .hero { padding: 6rem 1.25rem 3rem; }
+      .cta-final { padding: 4rem 1.25rem; }
+      .whatsapp-float { bottom: 1.25rem; right: 1.25rem; }
+      .quem-faz-grid { grid-template-columns: 1fr !important; text-align: center; }
+      .quem-faz-foto { margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <img src="../logo-icon.png" alt="Atitude e Progresso" />
+    Atitude e <span>Progresso</span>
+  </a>
+  <a href="../index.html#servicos" class="nav-back">
+    ← Voltar aos serviços
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge reveal">Presença Digital Profissional</div>
+    <h1 class="reveal d1">
+      Seu cliente procurou por você no Google.<br />
+      <span class="gradient-text" style="white-space:nowrap;font-size:0.78em">ELE ENCONTROU O CONCORRENTE.</span>
+    </h1>
+    <p class="reveal d2">
+      Sem página profissional, sem Google Meu Negócio e sem atendimento automático,
+      você perde clientes todos os dias, sem nem saber quantos.
+      Isso tem solução, e é mais simples do que parece.
+    </p>
+    <a href="https://wa.me/14377714110?text=Olá%20Ednei%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20Presença%20Digital" target="_blank" rel="noopener" class="btn-whatsapp reveal d3">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="dor-section">
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">O problema</div>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2;margin-bottom:0.75rem">
+        O que você perde todo dia <span style="color:var(--dourado)">sem presença digital</span>
+      </h2>
+      <p style="color:var(--cinza);font-size:0.9rem;font-weight:300;max-width:560px">
+        Não é exagero. É o que acontece enquanto seu negócio não aparece onde o cliente está procurando.
+      </p>
+    </div>
+    <div class="dor-grid">
+      <div class="dor-card reveal">
+        <span class="dor-stat">87%</span>
+        <h4>dos consumidores pesquisam no Google antes de comprar</h4>
+        <p>Se seu negócio não aparece, você não existe para quem está pronto pra comprar agora.</p>
+      </div>
+      <div class="dor-card reveal d1">
+        <span class="dor-stat">3x</span>
+        <h4>mais confiança gera um site profissional</h4>
+        <p>Clientes comparam. Quem tem página bem feita passa mais credibilidade, e fecha mais.</p>
+      </div>
+      <div class="dor-card reveal d2">
+        <span class="dor-stat">24h</span>
+        <h4>o cliente quer ser atendido a qualquer hora</h4>
+        <p>Sem atendimento automatizado, você perde quem manda mensagem fora do horário comercial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMAÇÃO -->
+<section>
+  <div class="section">
+    <div class="reveal" style="text-align:center;margin-bottom:0">
+      <div class="section-label">A transformação</div>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2;margin-bottom:0.75rem">
+        Como fica o seu negócio <span style="color:var(--dourado)">depois da entrega</span>
+      </h2>
+      <p style="color:var(--cinza);font-size:0.9rem;font-weight:300;max-width:520px;margin:0 auto">
+        Não é sobre ter um site bonito. É sobre parar de perder clientes para quem aparece antes de você.
+      </p>
+    </div>
+
+    <div class="transformacao-grid">
+      <div class="transf-col antes reveal">
+        <span class="transf-label">Antes</span>
+        <div class="transf-item"><span class="transf-icon">✗</span> Cliente pesquisa no Google e não te encontra</div>
+        <div class="transf-item"><span class="transf-icon">✗</span> Atendimento para quando você para</div>
+        <div class="transf-item"><span class="transf-icon">✗</span> Instagram com DMs sem resposta rápida</div>
+        <div class="transf-item"><span class="transf-icon">✗</span> Sem página, o negócio parece menor do que é</div>
+        <div class="transf-item"><span class="transf-icon">✗</span> Confiança perdida para o concorrente que aparece</div>
+        <div class="transf-item"><span class="transf-icon">✗</span> Zero controle sobre quantos clientes você perdeu</div>
+      </div>
+      <div class="transf-col depois reveal d1">
+        <span class="transf-label">+ Depois</span>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> Aparece no Google Maps quando alguém busca perto</div>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> IA responde clientes 24h, inclusive no domingo</div>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> ManyChat responde DMs e envia link automaticamente</div>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> Página profissional que passa credibilidade real</div>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> Você aparece antes, e passa mais confiança</div>
+        <div class="transf-item"><span class="transf-icon" style="color:var(--dourado)">✓</span> Estrutura que trabalha por você enquanto você trabalha</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGÁVEIS -->
+<section style="background:rgba(8,14,11,0.4);border-top:1px solid rgba(212,175,55,0.07)">
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">O que está incluído</div>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2">
+        Cada peça do serviço, <span style="color:var(--dourado)">explicada sem enrolação</span>
+      </h2>
+    </div>
+
+    <!-- NÚCLEO -->
+    <div class="reveal" style="margin-top:2.5rem;margin-bottom:0.75rem">
+      <span style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--dourado)">Fundação do serviço</span>
+    </div>
+    <div class="entregaveis-grid">
+      <div class="entregavel-card entregavel-core reveal">
+        <div class="entregavel-titulo">Google Meu Negócio</div>
+        <p>Setup completo e otimizado: fotos, categorias, horários, descrição com palavras-chave locais. Seu negócio aparece no mapa quando alguém pesquisar perto de você.</p>
+      </div>
+      <div class="entregavel-card entregavel-core reveal d1">
+        <div class="entregavel-titulo">Landing Page Profissional</div>
+        <p>Página mobile-first rápida e com identidade visual do seu negócio. Apresenta seus serviços com clareza, gera confiança e converte visitante em contato.</p>
+      </div>
+      <div class="entregavel-card entregavel-core reveal d2">
+        <div class="entregavel-titulo">Agente de IA na Página</div>
+        <p>Assistente virtual integrado que responde dúvidas dos visitantes automaticamente, 24h por dia, sem você precisar estar online.</p>
+      </div>
+      <div class="entregavel-card entregavel-core reveal">
+        <div class="entregavel-titulo">Redes Sociais Otimizadas</div>
+        <p>Perfil otimizado, bio estratégica e destaques organizados, sua presença no Instagram passa credibilidade antes do cliente sequer entrar em contato.</p>
+      </div>
+      <div class="entregavel-card entregavel-core reveal d1">
+        <div class="entregavel-titulo">30 Dias de Suporte</div>
+        <p>Após a entrega, você tem 30 dias de suporte por WhatsApp para ajustes, dúvidas e orientações sobre como usar tudo que foi entregue.</p>
+      </div>
+    </div>
+
+    <!-- EXTRAS -->
+    <div class="reveal" style="margin-top:2.5rem;margin-bottom:0.75rem">
+      <span style="font-size:0.7rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:var(--cinza)">Também incluído no pacote</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.85rem">
+      <div class="entregavel-extra reveal">
+        <div class="entregavel-extra-titulo">ManyChat no Instagram</div>
+        <p>Automação de DM: o cliente comenta ou manda mensagem, recebe resposta e link automático, sem você precisar responder na hora.</p>
+      </div>
+      <div class="entregavel-extra reveal d1">
+        <div class="entregavel-extra-titulo">SEO Local</div>
+        <p>Palavras-chave locais, meta tags e descrições pra seu negócio aparecer nas buscas certas sem depender de anúncio pago.</p>
+      </div>
+      <div class="entregavel-extra reveal d2">
+        <div class="entregavel-extra-titulo">Criativos para Instagram</div>
+        <p>5 posts ou carrosséis prontos pra publicar, com identidade visual do negócio. Você já começa com conteúdo na mão.</p>
+      </div>
+      <div class="entregavel-extra reveal">
+        <div class="entregavel-extra-titulo">QR Code Personalizado</div>
+        <p>QR code com identidade do negócio linkando pra sua página. Coloca no balcão, cardápio ou vitrine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA INTERMEDIÁRIO -->
+<section style="background:rgba(6,68,32,0.12);border-top:1px solid rgba(212,175,55,0.07);border-bottom:1px solid rgba(212,175,55,0.07)">
+  <div class="section" style="text-align:center;padding:4.5rem 2rem">
+    <h2 class="reveal" style="font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2;margin-bottom:1.25rem;max-width:680px;margin-left:auto;margin-right:auto">
+      Você não precisa de tudo.<br/>Precisa do que faz sentido<br/><span style="color:var(--dourado)">pro seu negócio agora.</span>
+    </h2>
+    <p class="reveal d1" style="color:var(--cinza);font-size:0.95rem;font-weight:300;max-width:460px;margin:0 auto 2.5rem;line-height:1.8">
+      Me manda uma mensagem descrevendo o seu negócio. Eu leio, entendo o que faz sentido e respondo com o que eu faria se fosse o meu negócio.
+    </p>
+    <a href="https://wa.me/14377714110?text=Olá%20Ednei%2C%20vim%20pela%20página%20de%20Presença%20Digital%20e%20quero%20conversar%20sobre%20o%20meu%20negócio" target="_blank" rel="noopener" class="btn-whatsapp reveal d2">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section>
+  <div class="section">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label">Como funciona</div>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2;margin-bottom:0.75rem">
+        Do primeiro contato à entrega, <span style="color:var(--dourado)">sem surpresas</span>
+      </h2>
+      <p style="color:var(--cinza);font-size:0.9rem;font-weight:300;max-width:520px;margin:0 auto">
+        Processo claro, prazos definidos e você acompanhando cada etapa.
+      </p>
+    </div>
+    <div class="processo-lista" style="max-width:620px;margin-left:auto;margin-right:auto">
+      <div class="processo-item reveal">
+        <div class="processo-num">01</div>
+        <div class="processo-content">
+          <h4>Call de alinhamento</h4>
+          <p>30 minutos pra eu entender o seu negócio, o seu público e o que você precisa. Sem compromisso. Se fizer sentido avançar, a gente fecha na mesma conversa.</p>
+        </div>
+      </div>
+      <div class="processo-item reveal d1">
+        <div class="processo-num">02</div>
+        <div class="processo-content">
+          <h4>Briefing completo</h4>
+          <p>Você me manda as informações do negócio: fotos, textos, identidade visual. Te envio um formulário simples, quanto mais contexto, melhor o resultado final.</p>
+        </div>
+      </div>
+      <div class="processo-item reveal d2">
+        <div class="processo-num">03</div>
+        <div class="processo-content">
+          <h4>Execução</h4>
+          <p>Eu faço tudo: Google Meu Negócio, desenvolvimento da página, automações. Você acompanha o progresso sem precisar fazer nada técnico.</p>
+        </div>
+      </div>
+      <div class="processo-item reveal">
+        <div class="processo-num">04</div>
+        <div class="processo-content">
+          <h4>Entrega e revisão</h4>
+          <p>Você recebe tudo funcionando. Testamos junto, ajusto o que precisar. Só considero entregue quando você estiver satisfeito com o resultado.</p>
+        </div>
+      </div>
+      <div class="processo-item reveal d1">
+        <div class="processo-num">05</div>
+        <div class="processo-content">
+          <h4>Suporte pós-entrega</h4>
+          <p>Ficou com dúvida? Me chama no WhatsApp. Precisa de ajuste pequeno? Está incluído no suporte, o prazo é definido na proposta conforme o que for contratado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM FAZ ISSO -->
+<section style="background:rgba(6,68,32,0.12);border-top:1px solid rgba(212,175,55,0.07);border-bottom:1px solid rgba(212,175,55,0.07)">
+  <div class="section">
+    <div class="quem-faz-grid" style="display:grid;grid-template-columns:200px 1fr;gap:3.5rem;align-items:center;max-width:780px;margin:0 auto">
+      <div class="reveal" style="flex-shrink:0">
+        <div style="width:180px;height:180px;border-radius:50%;overflow:hidden;border:2px solid rgba(212,175,55,0.3);margin:0 auto">
+          <img src="../foto-perfil.png" alt="Ednei Marinho" style="width:100%;height:100%;object-fit:cover;object-position:top" loading="lazy" />
+        </div>
+      </div>
+      <div class="reveal d1">
+        <div class="section-label">Quem faz isso</div>
+        <h2 style="font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:900;letter-spacing:-0.03em;line-height:1.2;margin-bottom:1rem">
+          Ednei Marinho
+        </h2>
+        <p style="color:rgba(248,245,240,0.8);font-size:0.925rem;line-height:1.8;font-weight:300;margin-bottom:0.85rem">
+          Trabalho na construção civil no Canadá enquanto construo meu negócio digital nas bordas do tempo. Estudo marketing digital desde 2019, já fiz funis, automações, landing pages e estratégias pra negócios reais.
+        </p>
+        <p style="color:rgba(248,245,240,0.8);font-size:0.925rem;line-height:1.8;font-weight:300">
+          Falo a linguagem de quem trabalha de verdade e não tem tempo a perder. Entrego o que faz sentido, sem enrolação, e só considero feito quando você está satisfeito.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section">
+    <div class="reveal">
+      <div class="section-label">Perguntas frequentes</div>
+      <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;letter-spacing:-0.03em">
+        Dúvidas antes de <span style="color:var(--dourado)">decidir</span>
+      </h2>
+    </div>
+    <div class="faq-lista">
+      <div class="faq-item reveal">
+        <h4>Funciona para qualquer tipo de negócio local?</h4>
+        <p>Sim. Funciona para prestadores de serviço, negócios locais, e-commerce e infoprodutores. O pacote é adaptado pra realidade do seu negócio, não é template genérico.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>Preciso saber de tecnologia pra usar o que for entregue?</h4>
+        <p>Não. Tudo é entregue pronto e configurado. Você recebe orientação de uso e tem suporte por WhatsApp pra tirar qualquer dúvida após a entrega.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>Como funciona o pagamento?</h4>
+        <p>50% na contratação, 50% na entrega. Parcelamento disponível, conversamos sobre o melhor formato na call de alinhamento.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>Quanto tempo até eu ver resultado?</h4>
+        <p>O Google Meu Negócio começa a aparecer nas buscas locais em 2 a 4 semanas após configuração. A landing page e o atendimento automático funcionam desde o primeiro dia.</p>
+      </div>
+      <div class="faq-item reveal">
+        <h4>Qual é o investimento?</h4>
+        <p>Depende do que faz sentido pro seu negócio, não existe pacote fixo igual pra todo mundo. Na call de alinhamento a gente entende o que você precisa e eu apresento uma proposta personalizada. Sem compromisso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="section-label reveal">Próximo passo</div>
+  <h2 class="reveal d1">
+    Vamos ver se faz sentido<br />
+    <span class="gradient-text">pra seu negócio</span>
+  </h2>
+  <p class="reveal d2">
+    Me manda uma mensagem no WhatsApp descrevendo seu negócio.
+    Agendamos uma call rápida de alinhamento, sem compromisso,
+    e você decide se quer avançar.
+  </p>
+  <a href="https://wa.me/14377714110?text=Olá%20Ednei%2C%20vim%20pela%20página%20de%20Presença%20Digital%20e%20quero%20saber%20mais" target="_blank" rel="noopener" class="btn-whatsapp reveal d3">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar no WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Atitude e Progresso · Ednei Marinho ·
+    <a href="../index.html">Voltar ao site</a>
+  </p>
+</footer>
+
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    const COUNT = 75, MAX_DIST = 160;
+    const GOLD = 'rgba(212,175,55,', GREEN = 'rgba(10,97,48,';
+    const pts = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.6 + 0.5, gold: Math.random() < 0.28,
+    }));
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(8,14,11,0.92)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MAX_DIST) {
+            const alpha = (1 - d / MAX_DIST) * 0.2;
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = pts[i].gold ? GOLD + alpha + ')' : GREEN + alpha + ')';
+            ctx.lineWidth = 0.7; ctx.stroke();
+          }
+        }
+      }
+      pts.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.gold ? GOLD + '0.8)' : GREEN + '0.9)'; ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+</script>
+
+<!-- CHATVOLT CHATBOT - lazy load após interação ou 5s -->
+<script>
+  (function() {
+    var loaded = false;
+    function loadChat() {
+      if (loaded) return;
+      loaded = true;
+      import('https://cdn.jsdelivr.net/npm/@chatvolt/embeds@latest/dist/chatbox/index.js')
+        .then(function(m) { m.default.initBubble({ agentId: 'cmiuwp8ns0g69kq2i1w5tvwh5' }); });
+    }
+    setTimeout(loadChat, 5000);
+    ['mousemove','keydown','touchstart','scroll'].forEach(function(e) {
+      document.addEventListener(e, loadChat, { once: true, passive: true });
+    });
+  })();
+</script>
+</body>
+</html>

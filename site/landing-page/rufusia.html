@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RufusIA, Sistema operacional pra quem trabalha com IA | Atitude e Progresso</title>
+  <meta name="description" content="21 skills prontas no Claude Code. Crie sites, funis, propostas, anúncios e muito mais, sem começar do zero toda vez. Por R$47.">
+  <link rel="icon" href="logo-icon.png" type="image/png">
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '996043913422447');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=996043913422447&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- Fim Meta Pixel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:     #064420;
+      --verde-mid: #0a6130;
+      --preto:     #080e0b;
+      --dourado:   #D4AF37;
+      --dourado-2: #f0cc55;
+      --branco:    #F8F5F0;
+      --cinza:     #9aab9f;
+      --radius:    5px;
+    }
+
+    html { scroll-behavior: smooth; background: var(--preto); }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+      color: var(--branco);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* CANVAS */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* PROGRESS BAR */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--verde-mid), var(--dourado));
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    nav, main, footer, section { position: relative; z-index: 1; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 2px; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,14,11,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .nav-logo img { height: 40px; width: auto; }
+    .nav-logo span { color: var(--dourado); }
+
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--dourado);
+      color: var(--dourado);
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--dourado); color: var(--preto); }
+
+    /* LAYOUT */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 96px 0; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+
+    /* SECTION LABEL */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dourado);
+      margin-bottom: 0.75rem;
+    }
+
+    /* GRADIENT TEXT */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-2) 50%, var(--dourado) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--dourado);
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9rem 3rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,68,32,0.45) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -55%);
+      pointer-events: none;
+    }
+
+    .hero-split {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .hero-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-right { text-align: center; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--dourado);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 2.5rem;
+    }
+
+    .badge-line { width: 20px; height: 1px; background: var(--dourado); opacity: 0.6; }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4.4rem);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--cinza);
+      max-width: 520px;
+      margin: 0 auto 3.5rem;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .hero-price { margin-bottom: 3.5rem; }
+
+    .hero-price .original {
+      font-size: 14px;
+      color: var(--cinza);
+      text-decoration: line-through;
+      margin-bottom: 8px;
+    }
+
+    .hero-price .current {
+      font-size: clamp(3rem, 5.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--dourado), var(--dourado-2), var(--dourado));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-price .current span { font-size: 1.6rem; font-weight: 700; }
+
+    .hero-price .note {
+      font-size: 13px;
+      color: var(--cinza);
+      margin-top: 12px;
+    }
+
+    /* AGENT VISUAL */
+    .agent-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .agent-hud {
+      position: relative;
+      width: 500px;
+      height: 580px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hud-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 4;
+    }
+    .hud-tl { top: 0; left: 0; border-top: 2px solid rgba(212,175,55,0.5); border-left: 2px solid rgba(212,175,55,0.5); }
+    .hud-tr { top: 0; right: 0; border-top: 2px solid rgba(212,175,55,0.5); border-right: 2px solid rgba(212,175,55,0.5); }
+    .hud-bl { bottom: 0; left: 0; border-bottom: 2px solid rgba(212,175,55,0.5); border-left: 2px solid rgba(212,175,55,0.5); }
+    .hud-br { bottom: 0; right: 0; border-bottom: 2px solid rgba(212,175,55,0.5); border-right: 2px solid rgba(212,175,55,0.5); }
+
+    .agent-glow {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 380px; height: 180px;
+      background: radial-gradient(ellipse, rgba(6,68,32,0.6) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+
+    .agent-img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 0 30px rgba(6,68,32,0.7)) drop-shadow(0 0 60px rgba(6,68,32,0.4));
+    }
+
+    .agent-scan {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.25) 25%, rgba(212,175,55,0.6) 50%, rgba(212,175,55,0.25) 75%, transparent 100%);
+      z-index: 5;
+      pointer-events: none;
+      animation: hud-scan 5s ease-in-out infinite;
+    }
+
+    @keyframes hud-scan {
+      0%   { top: 2%;   opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { top: 98%;  opacity: 0; }
+    }
+
+    .agent-label {
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.65);
+    }
+
+    .agent-status {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cinza);
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #2ecc71;
+      margin-right: 5px;
+      vertical-align: middle;
+      box-shadow: 0 0 6px #2ecc71;
+      animation: dot-blink 1.8s ease-in-out infinite;
+    }
+
+    @keyframes dot-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+
+    .brand { text-transform: none; }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #b8960f, var(--dourado), #f0cc55);
+      color: var(--preto);
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.1rem 3rem;
+      border-radius: 4px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); color: var(--preto); }
+
+    .btn-secondary {
+      display: inline-block;
+      border: 1px solid var(--dourado);
+      color: var(--dourado);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.1rem 3rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover { background: var(--dourado); color: var(--preto); }
+
+    .btn-cta-full {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: linear-gradient(135deg, #b8960f, var(--dourado), #f0cc55);
+      color: var(--preto);
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 1.1rem;
+      border-radius: 4px;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .btn-cta-full:hover { opacity: 0.9; transform: translateY(-1px); color: var(--preto); }
+
+    /* DOR */
+    .dor {
+      background: rgba(6,68,32,0.12);
+      border-top: 1px solid rgba(212,175,55,0.07);
+      border-bottom: 1px solid rgba(212,175,55,0.07);
+    }
+
+    .dor h2 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .dor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .dor-card {
+      background: rgba(8,14,11,0.6);
+      border: 1px solid rgba(212,175,55,0.08);
+      border-left: 3px solid rgba(212,175,55,0.3);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .dor-card .icon { font-size: 1.5rem; margin-bottom: 1rem; }
+
+    .dor-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+    .dor-card p { font-size: 0.85rem; color: var(--cinza); line-height: 1.65; font-weight: 300; }
+
+    /* SOLUÇÃO */
+    .solucao-intro { text-align: center; margin-bottom: 4rem; }
+
+    .solucao-intro h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .solucao-intro p {
+      font-size: 1rem;
+      color: var(--cinza);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .skill-card {
+      background: rgba(8,14,11,0.6);
+      border: 1px solid rgba(212,175,55,0.1);
+      border-left: 3px solid rgba(212,175,55,0.25);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.25rem;
+      transition: border-left-color 0.2s;
+    }
+
+    .skill-card:hover { border-left-color: var(--dourado); }
+
+    .skill-card .skill-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--dourado);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-card h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.4rem; }
+
+    .skill-card p { font-size: 0.82rem; color: var(--cinza); line-height: 1.55; font-weight: 300; }
+
+    .skills-more {
+      text-align: center;
+      color: var(--cinza);
+      font-size: 0.88rem;
+      padding: 1.25rem;
+      border: 1px dashed rgba(212,175,55,0.15);
+      border-radius: var(--radius);
+      font-weight: 300;
+    }
+
+    .skills-more strong { color: var(--branco); font-weight: 700; }
+
+    /* PARA QUEM */
+    .para-quem {
+      background: rgba(6,68,32,0.12);
+      border-top: 1px solid rgba(212,175,55,0.07);
+      border-bottom: 1px solid rgba(212,175,55,0.07);
+    }
+
+    .para-quem h2 {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .para-quem > .container > p {
+      color: var(--cinza);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    .perfis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .perfil-card {
+      background: rgba(8,14,11,0.5);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-left: 3px solid rgba(212,175,55,0.35);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .perfil-card .check { color: var(--dourado); font-size: 1rem; margin-bottom: 0.75rem; }
+
+    .perfil-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+    .perfil-card p { font-size: 0.85rem; color: var(--cinza); line-height: 1.65; font-weight: 300; }
+
+    /* SOBRE */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .sobre-foto {
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: var(--radius);
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+
+    .sobre-texto h2 {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .sobre-texto p {
+      color: var(--cinza);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.93rem;
+      font-weight: 300;
+    }
+
+    .sobre-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--dourado), var(--dourado-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat span { font-size: 0.72rem; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* OFERTA */
+    .oferta {
+      background: rgba(6,68,32,0.12);
+      border-top: 1px solid rgba(212,175,55,0.07);
+      border-bottom: 1px solid rgba(212,175,55,0.07);
+      text-align: center;
+    }
+
+    .oferta h2 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .oferta > .container > p { color: var(--cinza); margin-bottom: 3rem; font-size: 0.95rem; font-weight: 300; }
+
+    .oferta-box {
+      background: rgba(8,14,11,0.85);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .oferta-box .tag {
+      display: inline-block;
+      background: linear-gradient(135deg, #b8960f, var(--dourado));
+      color: var(--preto);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .oferta-box .price-original { font-size: 13px; color: var(--cinza); text-decoration: line-through; margin-bottom: 6px; }
+
+    .oferta-box .price-main {
+      font-size: clamp(3rem, 8vw, 4rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, var(--dourado), var(--dourado-2), var(--dourado));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .oferta-box .price-main sup { font-size: 1.4rem; vertical-align: super; font-weight: 700; }
+
+    .oferta-box .price-note { font-size: 12px; color: var(--cinza); margin-bottom: 2rem; }
+
+    .oferta-checklist { list-style: none; text-align: left; margin-bottom: 2.25rem; }
+
+    .oferta-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    .oferta-checklist li:last-child { border-bottom: none; }
+
+    .oferta-checklist li .ck { color: var(--dourado); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    .pagamentos { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem; }
+
+    .pagamento-badge {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: var(--cinza);
+    }
+
+    /* FAQ */
+    .faq h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--branco);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 700;
+      text-align: left;
+      padding: 1.35rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .faq-question .arrow { color: var(--dourado); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s; }
+    .faq-question[aria-expanded="true"] .arrow { transform: rotate(45deg); }
+
+    .faq-answer { display: none; padding: 0 0 1.35rem; color: var(--cinza); font-size: 0.9rem; line-height: 1.75; font-weight: 300; }
+    .faq-answer.open { display: block; }
+
+    /* CTA FINAL */
+    .cta-final {
+      background: rgba(6,68,32,0.12);
+      border-top: 1px solid rgba(212,175,55,0.07);
+      text-align: center;
+      padding: 96px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-final::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6,68,32,0.45) 0%, transparent 65%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-final > .container { position: relative; z-index: 1; }
+
+    .cta-final h2 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-final p {
+      color: var(--cinza);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .cta-final .price-badge {
+      display: inline-block;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--dourado);
+      font-size: 1rem;
+      font-weight: 900;
+      padding: 0.6rem 2rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dourado);
+      margin-bottom: 0.75rem;
+    }
+
+    footer p { font-size: 11px; color: var(--cinza); font-weight: 300; }
+    footer a { color: var(--cinza); }
+    footer a:hover { color: var(--dourado); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .section { padding: 64px 0; }
+      .hero { padding: 5rem 1.5rem 4rem; }
+      nav .nav-cta { display: none; }
+      .hero-split { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-right { text-align: center; }
+      .hero p { margin: 0 auto 2.5rem; }
+      .agent-hud { width: 280px; height: 340px; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .sobre-foto { aspect-ratio: auto; padding: 2.5rem; max-width: 100px; }
+      .oferta-box { padding: 2rem 1.5rem; }
+      .cta-final { padding: 72px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo-icon.png" alt="Atitude e Progresso">
+    <span>Atitude e Progresso</span>
+  </div>
+  <a href="https://pay.kiwify.com.br/iYIba1v" target="_blank" rel="noopener" class="nav-cta">Garantir acesso</a>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-split">
+
+    <!-- AGENTE VISUAL -->
+    <div class="hero-left reveal">
+      <div class="agent-wrapper">
+        <div class="agent-hud">
+          <span class="hud-corner hud-tl"></span>
+          <span class="hud-corner hud-tr"></span>
+          <span class="hud-corner hud-bl"></span>
+          <span class="hud-corner hud-br"></span>
+          <div class="agent-glow"></div>
+          <img src="rufusia-robot.png" alt="RufusIA" class="agent-img">
+          <div class="agent-scan"></div>
+        </div>
+        <div class="agent-label"><span class="brand">RufusIA</span> &nbsp; v1.0</div>
+        <div class="agent-status">
+          <span><span class="status-dot"></span>Agente ativo</span>
+          <span>21 Skills</span>
+          <span>Claude Code</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEXTO -->
+    <div class="hero-right reveal d2">
+      <div class="hero-badge">
+        <span class="badge-line"></span>
+        Lançamento · Oferta limitada
+        <span class="badge-line"></span>
+      </div>
+      <h1>
+        21 skills de IA.<br>
+        <span class="gradient-text">Seu negócio funcionando.</span>
+      </h1>
+      <p>
+        O RufusIA instala dentro do Claude Code e coloca ferramentas prontas no seu trabalho:
+        sites, funis, propostas, anúncios, relatórios e muito mais. Sem começar do zero toda vez.
+      </p>
+      <a href="#checkout" class="btn-primary">Quero o <span class="brand">RufusIA</span> agora</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- DOR -->
+<section class="section dor">
+  <div class="container">
+    <div class="section-label reveal">O problema</div>
+    <h2 class="reveal d1">Você usa IA.<br>Mas ainda faz tudo na mão.</h2>
+    <div class="dor-grid">
+      <div class="dor-card reveal d1">
+        
+        <h3>Horas perdidas toda semana</h3>
+        <p>Criar site, proposta, legenda, funil, cada tarefa vira uma sessão de tentativa e erro com o Claude.</p>
+      </div>
+      <div class="dor-card reveal d2">
+        
+        <h3>Começa do zero toda vez</h3>
+        <p>Nenhum contexto salvo, nenhum padrão fixo. O Claude não sabe quem é você nem como você trabalha.</p>
+      </div>
+      <div class="dor-card reveal d3">
+        
+        <h3>Resultado inconsistente</h3>
+        <p>Cada entrega sai diferente. Sem sistema, sem padrão, e o cliente percebe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section class="section">
+  <div class="container">
+    <div class="solucao-intro reveal">
+      <div class="section-label">A solução</div>
+      <div class="divider"></div>
+      <h2>O <span class="gradient-text brand">RufusIA</span> é o sistema operacional<br>do seu negócio dentro da IA</h2>
+      <p>
+        Uma estrutura completa instalada no Claude Code que entende o seu negócio,
+        guarda seu contexto e executa tarefas complexas com um comando.
+        Você chama a skill. O sistema entrega.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-name">/site</div>
+        <h3>Landing pages e sites</h3>
+        <p>HTML completo, responsivo, pronto pra hospedar. Do zero ao ar em minutos.</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-name">/proposta</div>
+        <h3>Proposta comercial</h3>
+        <p>Página web visual com diagnóstico, entregáveis, preço e CTA, enviável pelo WhatsApp.</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-name">/funil</div>
+        <h3>Funil de vendas completo</h3>
+        <p>Emails, WhatsApp e landing page de captura, estrutura completa do lead à venda.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-name">/meta-ads</div>
+        <h3>Campanha Meta Ads</h3>
+        <p>Estrutura completa com públicos, copies e criativos pra Facebook e Instagram.</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-name">/carrossel</div>
+        <h3>Posts e carrosseis</h3>
+        <p>Conteúdo visual pra Instagram e LinkedIn no padrão da sua marca.</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-name">/ebook</div>
+        <h3>Ebook completo</h3>
+        <p>Material rico estruturado por slides, pronto pra importar no Gamma e publicar.</p>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-name">/mapear-rotinas</div>
+        <h3>Mapeamento de rotinas</h3>
+        <p>Identifica processos repetitivos do negócio e estrutura fluxos pra automatizar com IA.</p>
+      </div>
+      <div class="skill-card reveal d1">
+        <div class="skill-name">/relatorio-cliente</div>
+        <h3>Relatório de resultados</h3>
+        <p>Documento profissional de resultados pra apresentar ao cliente ao final do mês.</p>
+      </div>
+      <div class="skill-card reveal d2">
+        <div class="skill-name">/anuncio-google</div>
+        <h3>Google Ads</h3>
+        <p>Estrutura de campanha com palavras-chave, grupos e copies, pronto pra subir.</p>
+      </div>
+    </div>
+
+    <div class="skills-more reveal">
+      <strong>+ 12 skills de gestão e operação:</strong> /instalar, /seo, /email-profissional, /aprovar-post, /publicar-tema, /responder-avaliacoes, /relatorio-ads, /abrir, /salvar, /atualizar, /legenda, /novo-projeto
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="section para-quem">
+  <div class="container">
+    <div class="section-label reveal">Para quem é</div>
+    <h2 class="reveal d1">Esse sistema é pra você?</h2>
+    <p class="reveal d2">Se você trabalha com serviços e quer parar de perder tempo com tarefas repetitivas, sim.</p>
+    <div class="perfis-grid">
+      <div class="perfil-card reveal d1">
+        
+        <h3>Freelancer e prestador de serviço</h3>
+        <p>Você entrega pra vários clientes ao mesmo tempo e precisa de um sistema que acelera sem baixar a qualidade.</p>
+      </div>
+      <div class="perfil-card reveal d2">
+        
+        <h3>Agência e consultoria</h3>
+        <p>Você tem processos repetitivos, briefing, proposta, relatório, conteúdo, e quer padronizar com IA de verdade.</p>
+      </div>
+      <div class="perfil-card reveal d3">
+        
+        <h3>Empreendedor que usa IA no dia a dia</h3>
+        <p>Você já usa o Claude mas começa do zero toda vez. Quer que ele conheça seu negócio e execute por você.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-foto reveal">
+        <img src="foto-perfil.png" alt="Ednei Marinho" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:4px;">
+      </div>
+      <div class="sobre-texto reveal d1">
+        <div class="section-label">Quem criou</div>
+        <h2>Ednei Marinho,<br>Atitude e Progresso</h2>
+        <p>
+          Trabalho com marketing digital, IA e automação, e construí o RufusIA porque
+          precisava de um sistema que funcionasse de verdade no dia a dia de quem presta serviço.
+        </p>
+        <p>
+          É um sistema que você instala uma vez e usa pra sempre, com acompanhamento incluso
+          pra quem comprar. Calibrado pra quem quer resultado, não pra quem quer estudar por mais seis meses.
+        </p>
+        <p>
+          "Resultado real começa com verdade. Chega de estudar, hora de executar."
+        </p>
+        <div class="sobre-stats">
+          <div class="stat">
+            <strong>21</strong>
+            <span>Skills prontas</span>
+          </div>
+          <div class="stat">
+            <strong>1×</strong>
+            <span>Instalação</span>
+          </div>
+          <div class="stat">
+            <strong>∞</strong>
+            <span>Atualizações</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA -->
+<section class="section oferta" id="checkout">
+  <div class="container">
+    <div class="section-label reveal">A oferta</div>
+    <h2 class="reveal d1">Tudo isso por <span class="gradient-text">R$47</span></h2>
+    <p class="reveal d2">Pagamento único. Sem assinatura. Você instala, usa e atualiza pra sempre.</p>
+
+    <div class="oferta-box reveal d2">
+      <div class="tag">Preço de lançamento</div>
+      <div class="price-original">De R$97</div>
+      <div class="price-main"><sup>R$</sup>47</div>
+      <div class="price-note">Pagamento único · Acesso vitalício</div>
+
+      <ul class="oferta-checklist">
+        <li><span class="ck">✓</span><span>21 skills prontas e funcionando</span></li>
+        <li><span class="ck">✓</span><span>Sistema completo de memória do negócio</span></li>
+        <li><span class="ck">✓</span><span>Templates de identidade visual, proposta e conteúdo</span></li>
+        <li><span class="ck">✓</span><span>Fluxo de publicação automática (Instagram + Facebook)</span></li>
+        <li><span class="ck">✓</span><span>Acompanhamento incluso para quem comprar</span></li>
+        <li><span class="ck">✓</span><span>Todas as atualizações futuras inclusas</span></li>
+        <li><span class="ck">✓</span><span>Instalação via terminal ou Claude Code, sem complicação</span></li>
+      </ul>
+
+      <a href="https://pay.kiwify.com.br/iYIba1v" target="_blank" rel="noopener" class="btn-cta-full">Garantir meu acesso agora</a>
+
+      <p style="font-size:0.78rem;color:var(--cinza);text-align:center;margin-top:1.25rem;line-height:1.6;">
+        Garantia de 7 dias. Se não gostar, é só pedir reembolso, sem perguntas.
+      </p>
+
+      <div class="pagamentos">
+        <div class="pagamento-badge">Cartão de crédito</div>
+        <div class="pagamento-badge">PIX</div>
+        <div class="pagamento-badge">Boleto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq">
+  <div class="container">
+    <div class="section-label reveal">Dúvidas frequentes</div>
+    <h2 class="reveal d1">FAQ</h2>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        O que é exatamente o RufusIA?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        O RufusIA é um sistema instalado dentro do Claude Code, o terminal de IA da Anthropic. Ele adiciona 21 "skills" (comandos) que executam tarefas completas por você: criar sites, escrever propostas, montar funis, gerar anúncios e muito mais. Você instala uma vez e usa pra sempre.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Preciso saber programar pra usar?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Não. O RufusIA foi construído pra quem trabalha com negócios, não pra desenvolvedor. A instalação é simples, tem um guia passo a passo, e o uso é por linguagem natural. Você escreve o que quer, o sistema entrega.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Funciona em Mac e Windows?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim. O Claude Code roda em Mac, Windows e Linux. O RufusIA funciona em qualquer um desses sistemas.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Precisa de assinatura do Claude?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim. O RufusIA roda dentro do Claude Code, que exige uma assinatura ativa da Anthropic (Claude Pro ou superior). O valor do RufusIA é separado e pago uma única vez.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        As skills se atualizam?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim. O repositório é atualizado conforme novas skills são criadas e as existentes melhoram. Quem compra tem acesso vitalício a todas as atualizações futuras, sem custo adicional.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Posso usar para meus clientes?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim. Você pode usar o RufusIA pra criar sites, propostas, relatórios e conteúdo pra quantos clientes quiser. A licença é para uso pessoal e profissional, sem restrição de volume.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Como recebo após a compra?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Após a confirmação do pagamento, você recebe por email o link do repositório e o guia de instalação completo. Em menos de 15 minutos o sistema está rodando.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">
+        Tem garantia?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        Sim. Você tem 7 dias de garantia após a compra. Se por qualquer motivo não gostar, é só enviar um email pedindo reembolso, sem perguntas, sem burocracia.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <h2 class="reveal">Chega de estudar.<br><span class="gradient-text">Hora de executar.</span></h2>
+    <p class="reveal d1">21 skills de IA instaladas no seu negócio, de uma vez, por R$47.</p>
+    <div class="price-badge reveal d2">R$47 · Pagamento único</div><br>
+    <a href="https://pay.kiwify.com.br/iYIba1v" target="_blank" rel="noopener" class="btn-secondary reveal d3">Quero o <span class="brand">RufusIA</span> agora</a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">Atitude e Progresso</div>
+    <p>© 2026 Ednei Marinho ·
+      <a href="https://www.atitudeeprogresso.com.br" target="_blank">atitudeeprogresso.com.br</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let W, H;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function Particle() {
+      this.x  = Math.random() * W;
+      this.y  = Math.random() * H;
+      this.r  = Math.random() * 1.4 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.18;
+      this.vy = (Math.random() - 0.5) * 0.18;
+      this.a  = Math.random() * 0.3 + 0.05;
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({length: 80}, () => new Particle());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212,175,55,${p.a})`;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    init();
+    draw();
+  })();
+
+  window.addEventListener('scroll', () => {
+    const d = document.documentElement;
+    const pct = d.scrollTop / (d.scrollHeight - d.clientHeight) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-question').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        btn.nextElementSibling.classList.add('open');
+      }
+    });
+  });
+
+  // NEURAL SPHERE
+  (function() {
+    const nc = document.getElementById('neural-canvas');
+    if (!nc) return;
+    const ctx = nc.getContext('2d');
+    const W = nc.width, H = nc.height;
+    const CX = W / 2, CY = H / 2;
+    const R = 100; // sphere radius in pixels
+
+    // Fibonacci sphere — even node distribution
+    const N = 110;
+    const golden = (1 + Math.sqrt(5)) / 2;
+    const base = [];
+    for (let i = 0; i < N; i++) {
+      const theta = 2 * Math.PI * i / golden;
+      const phi   = Math.acos(1 - 2 * (i + 0.5) / N);
+      base.push({
+        ox: Math.sin(phi) * Math.cos(theta),
+        oy: Math.cos(phi),
+        oz: Math.sin(phi) * Math.sin(theta)
+      });
+    }
+
+    // Pre-compute connection pairs
+    const THRESH2 = 0.28 * 0.28; // ~distance 0.28 on unit sphere
+    const pairs = [];
+    for (let i = 0; i < N; i++) {
+      for (let j = i + 1; j < N; j++) {
+        const dx = base[i].ox - base[j].ox;
+        const dy = base[i].oy - base[j].oy;
+        const dz = base[i].oz - base[j].oz;
+        if (dx*dx + dy*dy + dz*dz < THRESH2) pairs.push([i, j]);
+      }
+    }
+
+    let angle = 0;
+    const rot = new Array(N);
+
+    function project(n) {
+      const fov = 3.8;
+      const s = fov / (fov - n.z);
+      return { sx: n.x * s * R + CX, sy: n.y * s * R + CY };
+    }
+
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+
+      const cosA = Math.cos(angle), sinA = Math.sin(angle);
+      for (let i = 0; i < N; i++) {
+        const n = base[i];
+        rot[i] = {
+          x:  n.ox * cosA + n.oz * sinA,
+          y:  n.oy,
+          z: -n.ox * sinA + n.oz * cosA
+        };
+      }
+
+      // Connections
+      for (const [i, j] of pairs) {
+        const a = rot[i], b = rot[j];
+        const avgZ = (a.z + b.z) / 2;
+        const depth = (avgZ + 1) / 2;
+        if (depth < 0.05) continue;
+        const pa = project(a), pb = project(b);
+        ctx.beginPath();
+        ctx.moveTo(pa.sx, pa.sy);
+        ctx.lineTo(pb.sx, pb.sy);
+        ctx.strokeStyle = `rgba(212,175,55,${(depth * 0.35).toFixed(3)})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+
+      // Nodes (back to front)
+      const order = rot.map((n, i) => i).sort((a, b) => rot[a].z - rot[b].z);
+      for (const i of order) {
+        const n = rot[i];
+        const depth = (n.z + 1) / 2;
+        if (depth < 0.04) continue;
+        const p = project(n);
+        const r = depth * 2.5 + 0.4;
+        const alpha = 0.25 + depth * 0.75;
+
+        // Halo glow
+        const g = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, r * 4);
+        g.addColorStop(0, `rgba(212,175,55,${(alpha * 0.4).toFixed(3)})`);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, r * 4, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212,175,55,${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+
+      angle += 0.0038;
+      requestAnimationFrame(frame);
+    }
+
+    frame();
+  })();
+</script>
+
+</body>
+</html>

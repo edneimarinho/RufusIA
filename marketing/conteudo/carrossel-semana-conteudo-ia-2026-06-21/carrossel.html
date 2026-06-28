@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px; }
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+  }
+  .slide-header {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .slide-header .handle {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+  }
+  .slide-header .counter {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    opacity: 0.5;
+  }
+  .kicker {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    margin-bottom: 20px;
+  }
+  .ruler {
+    width: 70px;
+    height: 4px;
+    margin: 24px 0;
+  }
+  h1 {
+    font-weight: 900;
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+  }
+  p {
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  .number-big {
+    font-size: 260px;
+    font-weight: 800;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .slide-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+    right: 80px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .slide-footer span {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.5;
+    letter-spacing: 0.05em;
+  }
+
+  /* === SLIDE 1 — CAPA === */
+  .slide-1 {
+    background: #064420;
+    color: #F8F5F0;
+    justify-content: flex-end;
+    padding-bottom: 160px;
+  }
+  .slide-1 .kicker { color: #D4AF37; }
+  .slide-1 h1 { font-size: 82px; margin-bottom: 24px; }
+  .slide-1 .subtitle {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.5;
+    opacity: 0.8;
+    max-width: 700px;
+  }
+  .slide-1 .ruler { background: #D4AF37; }
+  .slide-1 .glow {
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* === SLIDE 2 — PROBLEMA === */
+  .slide-2 {
+    background: #1C1C1C;
+    color: #F8F5F0;
+  }
+  .slide-2 .kicker { color: #D4AF37; }
+  .slide-2 h2 { font-size: 52px; margin-bottom: 28px; }
+  .slide-2 p { font-size: 22px; color: #B2B2B2; margin-bottom: 16px; max-width: 800px; }
+  .slide-2 .ruler { background: #D4AF37; }
+  .slide-2 .highlight {
+    font-size: 26px;
+    font-weight: 700;
+    color: #D4AF37;
+    margin-top: 20px;
+    line-height: 1.4;
+  }
+
+  /* === SLIDE 3 — ETAPA 1 === */
+  .slide-3 {
+    background: #064420;
+    color: #F8F5F0;
+  }
+  .slide-3 .kicker { color: #D4AF37; }
+  .slide-3 .number-big { color: rgba(212,175,55,0.15); position: absolute; top: 60px; right: 60px; }
+  .slide-3 h2 { font-size: 48px; margin-bottom: 24px; }
+  .slide-3 p { font-size: 21px; color: rgba(248,245,240,0.8); margin-bottom: 14px; max-width: 750px; }
+  .slide-3 .ruler { background: #D4AF37; }
+
+  /* === SLIDE 4 — ETAPA 2 === */
+  .slide-4 {
+    background: #1C1C1C;
+    color: #F8F5F0;
+  }
+  .slide-4 .kicker { color: #D4AF37; }
+  .slide-4 .number-big { color: rgba(212,175,55,0.15); position: absolute; top: 60px; right: 60px; }
+  .slide-4 h2 { font-size: 48px; margin-bottom: 24px; }
+  .slide-4 p { font-size: 21px; color: #B2B2B2; margin-bottom: 14px; max-width: 750px; }
+  .slide-4 .ruler { background: #D4AF37; }
+
+  /* === SLIDE 5 — ETAPA 3 === */
+  .slide-5 {
+    background: #064420;
+    color: #F8F5F0;
+  }
+  .slide-5 .kicker { color: #D4AF37; }
+  .slide-5 .number-big { color: rgba(212,175,55,0.15); position: absolute; top: 60px; right: 60px; }
+  .slide-5 h2 { font-size: 48px; margin-bottom: 24px; }
+  .slide-5 p { font-size: 21px; color: rgba(248,245,240,0.8); margin-bottom: 14px; max-width: 750px; }
+  .slide-5 .ruler { background: #D4AF37; }
+
+  /* === SLIDE 6 — ETAPA 4 === */
+  .slide-6 {
+    background: #1C1C1C;
+    color: #F8F5F0;
+  }
+  .slide-6 .kicker { color: #D4AF37; }
+  .slide-6 .number-big { color: rgba(212,175,55,0.15); position: absolute; top: 60px; right: 60px; }
+  .slide-6 h2 { font-size: 48px; margin-bottom: 24px; }
+  .slide-6 p { font-size: 21px; color: #B2B2B2; margin-bottom: 14px; max-width: 750px; }
+  .slide-6 .ruler { background: #D4AF37; }
+  .slide-6 .highlight {
+    font-size: 24px;
+    font-weight: 700;
+    color: #D4AF37;
+    margin-top: 16px;
+    line-height: 1.4;
+  }
+
+  /* === SLIDE 7 — RESULTADO === */
+  .slide-7 {
+    background: #064420;
+    color: #F8F5F0;
+    text-align: center;
+    align-items: center;
+  }
+  .slide-7 .kicker { color: #D4AF37; }
+  .slide-7 h2 { font-size: 56px; margin-bottom: 32px; text-align: center; }
+  .slide-7 .ruler { background: #D4AF37; margin: 24px auto; }
+  .slide-7 .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+  }
+  .slide-7 .result-item {
+    background: rgba(0,0,0,0.25);
+    border-radius: 8px;
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .slide-7 .result-item .icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .slide-7 .result-item .label {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #D4AF37;
+    margin-bottom: 6px;
+  }
+  .slide-7 .result-item .desc {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(248,245,240,0.7);
+  }
+
+  /* === SLIDE 8 — CTA === */
+  .slide-8 {
+    background: #D4AF37;
+    color: #1C1C1C;
+    text-align: center;
+    align-items: center;
+  }
+  .slide-8 h2 {
+    font-size: 54px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .slide-8 .ruler { background: #1C1C1C; margin: 20px auto; }
+  .slide-8 p {
+    font-size: 22px;
+    font-weight: 500;
+    max-width: 700px;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    color: rgba(28,28,28,0.8);
+  }
+  .slide-8 .cta-handle {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .slide-8 .cta-sub {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 12px;
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 — CAPA -->
+<div class="slide slide-1">
+  <div class="glow"></div>
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="kicker">SISTEMA DE CONTEÚDO COM IA</div>
+  <h1>1 IDEIA.<br>4 CONTEÚDOS.<br>ZERO EQUIPE.</h1>
+  <div class="ruler"></div>
+  <div class="subtitle">Como eu crio uma semana inteira de conteúdo usando IA. Sem editor, sem social media, sem equipe.</div>
+</div>
+
+<!-- SLIDE 2 — PROBLEMA -->
+<div class="slide slide-2">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="kicker">O PROBLEMA</div>
+  <h2>Criar conteúdo toda semana esgota</h2>
+  <div class="ruler"></div>
+  <p>Se você trata cada post, vídeo e artigo como um projeto separado, a conta não fecha.</p>
+  <p>São 4 pesquisas, 4 roteiros, 4 produções. Toda semana. Sozinho.</p>
+  <p>A maioria desiste por isso. Não por falta de ideia, mas por falta de processo.</p>
+  <div class="highlight">A solução não é criar mais.<br>É criar melhor. Com sistema.</div>
+</div>
+
+<!-- SLIDE 3 — ETAPA 1 -->
+<div class="slide slide-3">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="number-big">01</div>
+  <div class="kicker">ETAPA 1</div>
+  <h2>Pesquisa de tendências em fontes gringas</h2>
+  <div class="ruler"></div>
+  <p>O RufusIA vasculha o que os maiores criadores em inglês publicaram na semana.</p>
+  <p>Matt Wolfe, Alex Hormozi, Dan Koe, newsletters com +1 milhão de leitores.</p>
+  <p>Ele filtra, adapta pro meu nicho e entrega 7-10 ideias com ângulo definido.</p>
+  <p style="font-weight:700; color:#D4AF37; margin-top:20px;">Eu só escolho 1.</p>
+</div>
+
+<!-- SLIDE 4 — ETAPA 2 -->
+<div class="slide slide-4">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="number-big">02</div>
+  <div class="kicker">ETAPA 2</div>
+  <h2>Roteiro do vídeo em bullet points</h2>
+  <div class="ruler"></div>
+  <p>Com a ideia escolhida, o RufusIA monta o roteiro: hook de abertura, blocos de conteúdo, exemplos concretos e CTA.</p>
+  <p>Não é teleprompter. São bullet points que guiam o raciocínio. Eu falo natural na câmera.</p>
+  <p>Thumbnail, descrição e tags já saem prontos junto.</p>
+</div>
+
+<!-- SLIDE 5 — ETAPA 3 -->
+<div class="slide slide-5">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="number-big">03</div>
+  <div class="kicker">ETAPA 3</div>
+  <h2>Carrossel pro Instagram sobre o mesmo tema</h2>
+  <div class="ruler"></div>
+  <p>Enquanto me preparo pra gravar, o RufusIA já cria o carrossel sobre o mesmo assunto.</p>
+  <p>Slides prontos em PNG, na identidade visual da marca, com legenda escrita.</p>
+  <p>Posso postar antes, durante ou depois do vídeo. Os dois se reforçam.</p>
+</div>
+
+<!-- SLIDE 6 — ETAPA 4 -->
+<div class="slide slide-6">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="number-big">04</div>
+  <div class="kicker">ETAPAS 4, 5 E 6</div>
+  <h2>Gravo, e a IA faz o resto</h2>
+  <div class="ruler"></div>
+  <p>Eu gravo o vídeo. A única parte manual do processo.</p>
+  <p>Depois, colo o link do YouTube. O RufusIA transcreve e transforma em artigo pro Substack. Mais profundo que o vídeo.</p>
+  <p>Em seguida, cria a versão email marketing: curta, direta, com CTA pro vídeo.</p>
+  <div class="highlight">A IA faz 80% do trabalho.<br>Os 20% que importam são você na câmera.</div>
+</div>
+
+<!-- SLIDE 7 — RESULTADO -->
+<div class="slide slide-7">
+  <div class="slide-header">
+    <span class="handle" style="color: #F8F5F0;">@atitudeeprogresso</span>
+  </div>
+  <div class="kicker">O RESULTADO</div>
+  <h2>1 ideia vira 4 conteúdos</h2>
+  <div class="ruler"></div>
+  <div class="result-grid">
+    <div class="result-item">
+      <span class="label">YouTube</span>
+      <span class="desc">Vídeo com roteiro estruturado</span>
+    </div>
+    <div class="result-item">
+      <span class="label">Instagram</span>
+      <span class="desc">Carrossel visual pronto</span>
+    </div>
+    <div class="result-item">
+      <span class="label">Substack</span>
+      <span class="desc">Artigo longo e profundo</span>
+    </div>
+    <div class="result-item">
+      <span class="label">Email</span>
+      <span class="desc">Email marketing com CTA</span>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 — CTA -->
+<div class="slide slide-8">
+  <div class="slide-header">
+    <span class="handle" style="color: #1C1C1C;">@atitudeeprogresso</span>
+  </div>
+  <h2>CONSISTÊNCIA<br>NÃO É SOBRE<br>TER MAIS TEMPO</h2>
+  <div class="ruler"></div>
+  <p>É sobre ter um sistema que funciona no tempo que você tem.</p>
+  <div class="cta-handle">@atitudeeprogresso</div>
+  <div class="cta-sub">Siga pra mais conteúdo sobre IA e marketing digital</div>
+</div>
+
+</body>
+</html>

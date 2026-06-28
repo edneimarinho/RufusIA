@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ednei Marinho | Links</title>
+  <meta name="description" content="Marketing digital, IA e automação com profundidade real. Todos os links do Ednei Marinho." />
+  <link rel="icon" href="https://www.atitudeeprogresso.com.br/logo-icon.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:   #064420;
+      --dourado: #D4AF37;
+      --preto:   #080e0b;
+      --branco:  #F8F5F0;
+      --cinza:   #9aab9f;
+    }
+
+    html, body {
+      min-height: 100%; background: var(--preto);
+      font-family: 'Inter', sans-serif; color: var(--branco);
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none; width: 100%; height: 100%;
+    }
+
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 3.5rem 1.25rem 4rem;
+    }
+
+    /* PERFIL */
+    .perfil {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 0.5s ease 0s forwards;
+    }
+    .foto-wrapper {
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.5);
+      box-shadow: 0 0 32px rgba(212,175,55,0.15);
+      overflow: hidden; margin-bottom: 1.1rem;
+    }
+    .foto-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .perfil-nome { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+    .perfil-handle { font-size: 0.8rem; font-weight: 600; color: var(--dourado); letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+    .perfil-bio { font-size: 0.82rem; color: var(--cinza); font-weight: 300; line-height: 1.65; max-width: 300px; }
+
+    /* LINKS */
+    .links-lista { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .link-card {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(6,68,32,0.18); border: 1px solid rgba(212,175,55,0.1);
+      border-radius: 10px; padding: 1rem 1.1rem;
+      text-decoration: none; color: var(--branco);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      opacity: 0; animation: fadeUp 0.4s ease forwards;
+    }
+    .link-card:hover { background: rgba(6,68,32,0.32); border-color: rgba(212,175,55,0.35); transform: translateY(-2px); }
+    .link-card:nth-child(1) { animation-delay: 0.1s; }
+    .link-card:nth-child(2) { animation-delay: 0.17s; }
+    .link-card:nth-child(3) { animation-delay: 0.24s; }
+    .link-card:nth-child(4) { animation-delay: 0.31s; }
+
+    .link-icon {
+      width: 42px; height: 42px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.15);
+    }
+    .link-icon svg { width: 20px; height: 20px; }
+
+    .link-texto { flex: 1; }
+    .link-titulo { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .link-sub { font-size: 0.75rem; color: var(--cinza); font-weight: 300; }
+
+    .link-arrow { color: rgba(212,175,55,0.4); font-size: 1rem; transition: color 0.2s, transform 0.2s; }
+    .link-card:hover .link-arrow { color: var(--dourado); transform: translateX(3px); }
+
+    /* SERVIÇOS */
+    .divisor { width: 100%; max-width: 440px; border: none; border-top: 1px solid rgba(212,175,55,0.08); margin: 0.25rem 0; }
+
+    .servicos-mini {
+      width: 100%; max-width: 440px;
+      background: rgba(6,68,32,0.15); border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 12px; padding: 1.5rem 1.25rem; text-align: center;
+      opacity: 0; animation: fadeUp 0.4s ease 0.45s forwards;
+    }
+    .servicos-titulo {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--dourado); margin-bottom: 1rem;
+    }
+    .servicos-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; margin-bottom: 1.25rem; }
+    .tag {
+      font-size: 0.75rem; font-weight: 500; padding: 0.3rem 0.8rem;
+      background: rgba(212,175,55,0.07); border: 1px solid rgba(212,175,55,0.18);
+      border-radius: 20px; color: rgba(248,245,240,0.85);
+    }
+    .btn-servicos {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(135deg, #1a7a35, #25a244);
+      color: #fff; font-size: 0.85rem; font-weight: 700;
+      border-radius: 6px; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-servicos:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-servicos svg { width: 16px; height: 16px; }
+
+    /* RODAPÉ */
+    .rodape {
+      margin-top: 2.5rem; text-align: center;
+      font-size: 0.72rem; color: rgba(154,171,159,0.4);
+      opacity: 0; animation: fadeUp 0.4s ease 0.55s forwards;
+    }
+    .rodape a { color: rgba(212,175,55,0.5); text-decoration: none; }
+    .rodape a:hover { color: var(--dourado); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+  <!-- PERFIL -->
+  <div class="perfil">
+    <div class="foto-wrapper">
+      <img src="https://www.atitudeeprogresso.com.br/foto-perfil.png" alt="Ednei Marinho" />
+    </div>
+    <div class="perfil-nome">Ednei Marinho</div>
+    <div class="perfil-handle">@edneimarinho</div>
+    <p class="perfil-bio">Marketing digital, IA e automação, sem guru, sem atalho falso. Construindo do zero, mostrando o processo.</p>
+  </div>
+
+  <!-- LINKS -->
+  <div class="links-lista">
+
+    <a href="https://www.atitudeeprogresso.com.br" target="_blank" rel="noopener" class="link-card">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div class="link-texto">
+        <div class="link-titulo">Atitude e Progresso</div>
+        <div class="link-sub">Site oficial — serviços e conteúdo</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://www.youtube.com/@ednei.marinho" target="_blank" rel="noopener" class="link-card">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24" fill="#D4AF37">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+        </svg>
+      </div>
+      <div class="link-texto">
+        <div class="link-titulo">YouTube</div>
+        <div class="link-sub">IA, automação e funis de venda</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://substack.com/@edneimarinho" target="_blank" rel="noopener" class="link-card">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24" fill="#D4AF37">
+          <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+        </svg>
+      </div>
+      <div class="link-texto">
+        <div class="link-titulo">Substack</div>
+        <div class="link-sub">Newsletter semanal sobre marketing e IA</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://www.linkedin.com/in/ednei-marinho/" target="_blank" rel="noopener" class="link-card">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24" fill="#D4AF37">
+          <path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.8-3-1.9 0-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.1zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zm1.8 13h-3.6V9h3.6v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.8v20.4C0 23.2.8 24 1.8 24h20.4c1 0 1.8-.8 1.8-1.8V1.8C24 .8 23.2 0 22.2 0z"/>
+        </svg>
+      </div>
+      <div class="link-texto">
+        <div class="link-titulo">LinkedIn</div>
+        <div class="link-sub">Ednei Marinho</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://www.atitudeeprogresso.com.br/portfolio" target="_blank" rel="noopener" class="link-card">
+      <div class="link-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      </div>
+      <div class="link-texto">
+        <div class="link-titulo">Portfólio</div>
+        <div class="link-sub">Sites criados com IA — veja os projetos</div>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <hr class="divisor" />
+
+    <!-- SERVIÇOS -->
+    <div class="servicos-mini">
+      <p class="servicos-titulo">Posso fazer pro seu negócio</p>
+      <div class="servicos-tags">
+        <span class="tag">Site profissional</span>
+        <span class="tag">Google Meu Negócio</span>
+        <span class="tag">Linktree</span>
+        <span class="tag">Automação com IA</span>
+        <span class="tag">Criativos</span>
+        <span class="tag">ManyChat</span>
+      </div>
+      <a href="https://wa.me/14377714110?text=Olá%20Ednei%2C%20vim%20pelos%20seus%20links%20e%20quero%20saber%20mais%20sobre%20presença%20digital" target="_blank" rel="noopener" class="btn-servicos">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+
+  </div>
+
+  <div class="rodape">
+    <p>© 2025 Ednei Marinho · <a href="https://www.atitudeeprogresso.com.br">Atitude e Progresso</a></p>
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    const mobile = window.innerWidth < 768;
+    const COUNT = mobile ? 20 : 50, MAX_DIST = mobile ? 90 : 140;
+    const GOLD = 'rgba(212,175,55,', GREEN = 'rgba(10,97,48,';
+    const pts = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.4 + 0.4, gold: Math.random() < 0.28,
+    }));
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(8,14,11,0.94)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < MAX_DIST) {
+            const alpha = (1 - d / MAX_DIST) * 0.15;
+            ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
+            ctx.strokeStyle = pts[i].gold ? GOLD + alpha + ')' : GREEN + alpha + ')';
+            ctx.lineWidth = 0.6; ctx.stroke();
+          }
+        }
+      }
+      pts.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.gold ? GOLD + '0.7)' : GREEN + '0.8)'; ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      });
+      animId = requestAnimationFrame(draw);
+    }
+    let animId;
+    draw();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(animId);
+      else animId = requestAnimationFrame(draw);
+    });
+  })();
+</script>
+
+</body>
+</html>
